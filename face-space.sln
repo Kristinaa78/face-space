@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "face-space", "face-space.csproj", "{6BC83A37-6D1F-43C4-8B44-1A0740CC2A12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BC83A37-6D1F-43C4-8B44-1A0740CC2A12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BC83A37-6D1F-43C4-8B44-1A0740CC2A12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BC83A37-6D1F-43C4-8B44-1A0740CC2A12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BC83A37-6D1F-43C4-8B44-1A0740CC2A12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4BFBD285-3F06-4847-BBE1-A1A2BAF8D063}
+	EndGlobalSection
+EndGlobal
