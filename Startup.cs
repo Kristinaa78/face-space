@@ -1,4 +1,8 @@
+using face_space.Application.Interfaces;
+using face_space.Application.Services;
+using face_space.Persistance.Interfaces;
 using face_space.Persistance.Model;
+using face_space.Persistance.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,10 +36,14 @@ namespace face_space
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IUserRepository userRepository)
         {
             if (env.IsDevelopment())
             {
@@ -47,6 +55,8 @@ namespace face_space
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            SeedData.SeedUsers(userRepository);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
