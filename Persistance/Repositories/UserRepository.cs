@@ -1,5 +1,7 @@
-﻿using face_space.Persistance.Interfaces;
+﻿using face_space.Application.Dtos;
+using face_space.Persistance.Interfaces;
 using face_space.Persistance.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +17,12 @@ namespace face_space.Persistance.Repositories
             _context = context;
         }
 
-        public async Task<User> createUser(string username, string password)
+        public async Task<User> createUser(RegisterDto registerDto)
         {
             var user = _context.Users.Add(new User
             {
-                Username = username,
-                Password = password,
+                Username = registerDto.Username,
+                Password = registerDto.Password,
                 createdAt = DateTime.Now
             });
 
@@ -31,7 +33,12 @@ namespace face_space.Persistance.Repositories
 
         public async Task<List<User>> getUsers()
         {
-            return _context.Users.ToList();
+            return await _context.Users.ToListAsync();
+        }
+
+        public async Task<User> loginUser(LoginDto loginDto)
+        {
+            return await _context.Users.FirstAsync(x => x.Username.Equals(loginDto.Username) && x.Password.Equals(loginDto.Password));
         }
     }
 }

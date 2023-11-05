@@ -1,4 +1,5 @@
-﻿using face_space.Persistance.Interfaces;
+﻿using face_space.Application.Dtos;
+using face_space.Persistance.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
@@ -11,8 +12,14 @@ namespace face_space.Persistance.Model
             if ((await repository.getUsers()).Count != 0) 
                 return;
 
-            repository.createUser("jano", "feri");
-            repository.createUser("feri", "jano");
+            await repository.createUser(new RegisterDto { 
+                Username = "jano",
+                Password = "feri",
+            });
+            await repository.createUser(new RegisterDto { 
+                Username = "feri",
+                Password = "jano",
+            });
         }
     }
 }

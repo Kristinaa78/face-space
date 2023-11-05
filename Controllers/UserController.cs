@@ -5,6 +5,9 @@ using System.Net;
 using System.Threading.Tasks;
 using System;
 using face_space.Persistance.Model;
+using face_space.Application.Dtos;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace face_space.Controllers
 {
@@ -18,26 +21,55 @@ namespace face_space.Controllers
             _service = service;
         }
 
-        [HttpGet("create")]
-        public async Task<IActionResult> CreateUser()
+        [HttpPost("register")]
+        public async Task<IActionResult> CreateUser([FromBody] RegisterDto register)
         {
-            User result;
+            UserDto result;
             try
             {
-                result = await _service.createUser("", "");
+                result = await _service.createUser(register);
             }
             catch (Exception ex)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
+            HttpContext.Response.Cookies.Append(
+                "Token",
+                result.Token,
+                new CookieOptions
+                {
+                    HttpOnly = true
+                });
             return Ok(result);
         }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> loginUser([FromBody] LoginDto login)
+        {
+            UserDto result;
+            try
+            {
+                result = await _service.loginUser(login);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+            HttpContext.Response.Cookies.Append(
+                "Token",
+                result.Token,
+                new CookieOptions
+                {
+                    HttpOnly = true
+                });
+            return Ok(result);
+        }
 
+        [Authorize]
         [HttpGet()]
         public async Task<IActionResult> GetUsers()
         {
-            List<User> result;
+            List<UserDto> result;
             try
             {
                 result = await _service.getUsers();
