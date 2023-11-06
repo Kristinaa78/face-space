@@ -1,0 +1,6 @@
+<p>
+  room works!
+</p>
+<p *ngFor="let i of conferenceHubService.messages">{{i.senderUsername}}: {{i.content}}</p>
+<input type="text" [(ngModel)]="newMessage">
+<button (click)="sendMessage()">Send</button>

@@ -1,0 +1,29 @@
+import { Injectable } from '@angular/core';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ConferenceHubService {
+
+  private hubConnection!: HubConnection;
+  public messages: any = [];
+  
+  constructor() { }
+
+  createHubConnection(roomId: string){
+    this.hubConnection = new HubConnectionBuilder()
+    .withUrl('hub?roomId=' + roomId, {}).withAutomaticReconnect().build()
+
+    this.hubConnection.start().catch(err => console.log(err));
+
+    this.hubConnection.on('NewMessage', message => {
+      this.messages.push(message);
+    });
+  }
+
+  async sendMessage(content: string){
+    return this.hubConnection.invoke('SendMessage', content)
+      .catch(error => console.log(error));
+  }
+}

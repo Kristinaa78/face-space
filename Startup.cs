@@ -3,6 +3,7 @@ using face_space.Application.Services;
 using face_space.Persistance.Interfaces;
 using face_space.Persistance.Model;
 using face_space.Persistance.Repositories;
+using face_space.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -72,10 +73,12 @@ namespace face_space
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IUserRepository userRepository)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IUserRepository userRepository, IRoleRepository roleRepository)
         {
             if (env.IsDevelopment())
             {
@@ -88,7 +91,7 @@ namespace face_space
                 app.UseHsts();
             }
 
-            SeedData.SeedUsers(userRepository);
+            SeedData.SeedUsers(userRepository, roleRepository);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -103,6 +106,7 @@ namespace face_space
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ConferenceHub>("hub");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
@@ -112,7 +116,6 @@ namespace face_space
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
-
                 spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())

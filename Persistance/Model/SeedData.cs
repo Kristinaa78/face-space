@@ -7,7 +7,7 @@ namespace face_space.Persistance.Model
 {
     public class SeedData
     {
-        public static async Task SeedUsers(IUserRepository repository)
+        public static async Task SeedUsers(IUserRepository repository, IRoleRepository roleRepository)
         {
             if ((await repository.getUsers()).Count != 0) 
                 return;
@@ -20,6 +20,9 @@ namespace face_space.Persistance.Model
                 Username = "feri",
                 Password = "jano",
             });
+
+            await roleRepository.createRole("Admin");
+            await roleRepository.createRole("User");
         }
     }
 }
