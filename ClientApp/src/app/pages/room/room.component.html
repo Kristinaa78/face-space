@@ -4,3 +4,10 @@
 <p *ngFor="let i of conferenceHubService.messages">{{i.senderUsername}}: {{i.content}}</p>
 <input type="text" [(ngModel)]="newMessage">
 <button (click)="sendMessage()">Send</button>
+<button (click)="callThem()">Call</button>
+<br>
+<video #videoPlayer width="100%" height="170" controls></video>
+<div *ngFor="let video of videos">
+  <video  width="100%" height="150" [srcObject]="video" (loadedmetadata)="onLoadedMetadata($event)">
+  </video>
+</div>

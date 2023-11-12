@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
 
+  public user: any;
+
   constructor(private httpClient: HttpClient) { }
   public register(newUser: any): Observable<any> {
     return this.httpClient.post<any>('api/user/register/', newUser);

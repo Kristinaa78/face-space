@@ -8,7 +8,8 @@ export class ConferenceHubService {
 
   private hubConnection!: HubConnection;
   public messages: any = [];
-  
+  public usersInRoom: any = [];
+
   constructor() { }
 
   createHubConnection(roomId: string){
@@ -19,6 +20,10 @@ export class ConferenceHubService {
 
     this.hubConnection.on('NewMessage', message => {
       this.messages.push(message);
+    });
+
+    this.hubConnection.on('AllConnected', message => {
+      this.usersInRoom = message;
     });
   }
 

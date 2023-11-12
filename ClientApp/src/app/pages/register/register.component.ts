@@ -18,6 +18,6 @@ export class RegisterComponent implements OnInit {
   }
 
   public submitRegistration() {
-    this.userService.register(this.user).subscribe();
+    this.userService.register(this.user).subscribe(x => this.userService.user = x.username);
   }
 }

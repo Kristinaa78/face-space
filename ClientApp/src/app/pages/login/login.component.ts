@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   }
 
   public submitLogin() {
-    this.userService.login(this.user).subscribe();
+    this.userService.login(this.user).subscribe(x => this.userService.user = x.username);
   }
 
 }

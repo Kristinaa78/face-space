@@ -18,11 +18,12 @@ namespace face_space.SignalR
             var roomId = httpContext.Request.Query["roomId"].ToString();
             var username = Context.User.FindFirst(ClaimTypes.Name)?.Value;
 
-            connectedUsers.Add(username, roomId);
 
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
 
             await Clients.Group(roomId).SendAsync("UserConnected", username);
+            await Clients.Group(roomId).SendAsync("AllConnected", connectedUsers.Keys);
+            connectedUsers.Add(username, roomId);
         }
 
         public async Task SendMessage(string content)

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import Peer from 'peerjs';
 import { ConferenceHubService } from 'src/app/services/conference/conference-hub.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-room',
@@ -10,14 +12,58 @@ export class RoomComponent implements OnInit {
 
   public newMessage = "";
 
-  constructor(public conferenceHubService: ConferenceHubService) { }
+  @ViewChild('videoPlayer') localvideoPlayer!: ElementRef;
+  stream: any;
+  peer: any;
+  videos: any = [];
+  
+  constructor(public conferenceHubService: ConferenceHubService,
+              private userService: UserService) { }
 
   ngOnInit() {
     this.conferenceHubService.createHubConnection("1");
+    this.createLocalStream();
+
+    this.peer = new Peer(this.userService.user);
+
+    this.peer.on('call', (call: any) => {
+      call.answer(this.stream);
+
+      call.on('stream', (otherUserVideoStream: MediaStream) => {
+        this.addOtherUserVideo(otherUserVideoStream);
+      });
+    });
+  }
+
+  public callThem() {
+    console.log(this.conferenceHubService.usersInRoom);
+    this.conferenceHubService.usersInRoom.forEach((user: any) => {
+      const call = this.peer.call(user, this.stream, {
+        metadata: { userId: this.userService.user },
+      });
+      call.on('stream', (otherUserVideoStream: MediaStream) => {
+        this.addOtherUserVideo(otherUserVideoStream);
+      });
+    });
   }
 
   public sendMessage() {
     this.conferenceHubService.sendMessage(this.newMessage);
     this.newMessage = "";
+  }
+
+  async createLocalStream() {
+    this.stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    this.localvideoPlayer.nativeElement.srcObject = this.stream;
+    this.localvideoPlayer.nativeElement.load();
+    this.localvideoPlayer.nativeElement.play();
+  }
+
+  addOtherUserVideo(stream: MediaStream) {
+    this.videos.push(stream);
+  }
+
+  onLoadedMetadata(event: Event) {
+    (event.target as HTMLVideoElement).play();
   }
 }
