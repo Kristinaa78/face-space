@@ -11,6 +11,10 @@ export class NavigationComponent implements OnInit {
   constructor(public userService: UserService) { }
 
   ngOnInit() {
+    this.userService.getUser().subscribe(x => {
+      this.userService.user = x.name
+      console.log(x);
+    });
   }
 
 }

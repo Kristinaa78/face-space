@@ -80,5 +80,20 @@ namespace face_space.Controllers
             }
             return Ok(result);
         }
+
+        [Authorize]
+        [HttpGet("user")]
+        public async Task<IActionResult> GetUser()
+        {
+            string result = User.Identity.Name;
+            try
+            {
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+            return Ok(new { name = result});
+        }
     }
 }

@@ -1,6 +1,6 @@
 <p>
   navigation works! - {{userService.user}}
 </p>
-<a [routerLink]="['/room']">room</a><br>
+<a *ngIf="userService.user != null && userService.user != ''" [routerLink]="['/room']">room</a><br>
 <a [routerLink]="['/login']">login</a><br>
 <a [routerLink]="['/register']">register</a>

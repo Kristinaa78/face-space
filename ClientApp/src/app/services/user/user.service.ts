@@ -17,4 +17,8 @@ export class UserService {
   public login(user: any): Observable<any> {
     return this.httpClient.post<any>('api/user/login/', user);
   }
+
+  public getUser(): Observable<any> {
+    return this.httpClient.get<string>('api/user/user/');
+  }
 }
