@@ -15,7 +15,7 @@ export class RoomComponent implements OnInit {
   @ViewChild('videoPlayer') localvideoPlayer!: ElementRef;
   stream: any;
   peer: any;
-  videos: any = [];
+  videos: Set<MediaStream> = new Set<MediaStream>();
   
   constructor(public conferenceHubService: ConferenceHubService,
               private userService: UserService) { }
@@ -37,6 +37,7 @@ export class RoomComponent implements OnInit {
 
   public callThem() {
     console.log(this.conferenceHubService.usersInRoom);
+    this.videos.clear();
     this.conferenceHubService.usersInRoom.forEach((user: any) => {
       const call = this.peer.call(user, this.stream, {
         metadata: { userId: this.userService.user },
@@ -60,7 +61,7 @@ export class RoomComponent implements OnInit {
   }
 
   addOtherUserVideo(stream: MediaStream) {
-    this.videos.push(stream);
+    this.videos.add(stream);
   }
 
   onLoadedMetadata(event: Event) {
