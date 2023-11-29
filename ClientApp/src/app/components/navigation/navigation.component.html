@@ -1,6 +1,45 @@
-<p>
-  navigation works! - {{userService.user}}
-</p>
-<a *ngIf="userService.user != null && userService.user != ''" [routerLink]="['/room']">room</a><br>
-<a [routerLink]="['/login']">login</a><br>
-<a [routerLink]="['/register']">register</a>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&display=swap"
+  rel="stylesheet"
+/>
+
+<header>
+  <nav class="navbar navbar-expand-sm mb-0">
+    <div class="container-fluid" style="background-color: #1e1e1f">
+      <div class="d-flex justify-content-between">
+        <a class="navbar-brand" style="padding-left: 15px" [routerLink]="['/']"
+          >faceSPACE</a
+        >
+        <div>menu</div>
+      </div>
+      <!-- 
+      <a *ngIf="userService.user != null && userService.user != ''" [routerLink]="['/room']">room</a><br>
+      <a [routerLink]="['/login']">login</a><br>
+      <a [routerLink]="['/register']">register</a> -->
+      <div class="d-flex flex-row">
+        <ul class="navbar-nav flex-grow">
+          <li
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link text-nav" [routerLink]="['/']">Home</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-nav" [routerLink]="['/login']">LOGIN</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-nav" [routerLink]="['/registration']"
+              >SIGN UP</a
+            >
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-nav" [routerLink]="['/about']">ABOUT</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

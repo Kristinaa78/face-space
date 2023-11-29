@@ -1,0 +1,33 @@
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+.navbar-brand { 
+  background-image: linear-gradient(71deg, rgb(253 107 198) 0%, rgb(251 160 223) 59%, rgb(243 200 232) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-size: 30px;
+  letter-spacing: 1px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.nav-item {
+  font-weight: 500;
+  color: white !important;
+  text-transform: uppercase;
+  font-size: 18px;
+}
+  
+.text-nav {
+  font-weight: 700;
+  color: #b5ceff;
+  background-image: -webkit-linear-gradient(0deg, #e69dd5  18%, #fdb3f0 0%, #fda5dd 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+}
