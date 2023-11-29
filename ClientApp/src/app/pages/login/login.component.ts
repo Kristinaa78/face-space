@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -16,20 +17,23 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   registration: boolean = false;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {}
 
   public submitLogin() {
-    this.userService
-      .login(this.user)
-      .subscribe((x) => (this.userService.user = x.username));
+    this.userService.login(this.user).subscribe((x) => {
+      this.userService.user = x.username;
+      window.location.href="";
+    });
   }
 
   public submitRegistration() {
-    this.userService
-      .register(this.user)
-      .subscribe((x) => (this.userService.user = x.username));
+    this.userService.register(this.user).subscribe((x) => {
+      this.userService.user = x.username;
+
+      window.location.href="";
+    });
   }
 
   public switchToRegistration() {

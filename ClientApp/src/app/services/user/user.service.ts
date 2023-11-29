@@ -18,6 +18,10 @@ export class UserService {
     return this.httpClient.post<any>('api/user/login/', user);
   }
 
+  public signOut(): Observable<any> {
+    return this.httpClient.delete<any>('api/user/sign-out/');
+  }
+
   public getUser(): Observable<any> {
     return this.httpClient.get<string>('api/user/user/');
   }

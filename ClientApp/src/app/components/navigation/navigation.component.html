@@ -12,12 +12,24 @@
         <a class="navbar-brand" style="padding-left: 15px" [routerLink]="['/']"
           >faceSPACE</a
         >
-        <div>menu</div>
       </div>
-      <!-- 
-      <a *ngIf="userService.user != null && userService.user != ''" [routerLink]="['/room']">room</a><br>
-      <a [routerLink]="['/login']">login</a><br>
-      <a [routerLink]="['/register']">register</a> -->
+      <div *ngIf="userService.user != null">
+        <button
+          pButton
+          class="px-1 py-1 p-button-text"
+          [disabled]="true"
+          style="font-weight: 600"
+        >
+          {{ user.name }}
+          <img
+            style="margin-left: 10px"
+            src="https://source.boringavatars.com/beam"
+            alt="”Image”"
+            height="30px"
+            width="30px"
+          />
+        </button>
+      </div>
       <div class="d-flex flex-row">
         <ul class="navbar-nav flex-grow">
           <li
@@ -27,16 +39,33 @@
           >
             <a class="nav-link text-nav" [routerLink]="['/']">Home</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <li
+            *ngIf="userService.user != null"
+            class="nav-item d-flex align-items-center"
+          >
+            <button
+              pButton
+              class="sign-out-button py-1"
+              (click)="signOut()"
+            >
+              SIGN OUT
+            </button>
+          </li>
+          <li
+            *ngIf="userService.user == null"
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+          >
             <a class="nav-link text-nav" [routerLink]="['/login']">LOGIN</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <li
+            *ngIf="userService.user == null"
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+          >
             <a class="nav-link text-nav" [routerLink]="['/registration']"
               >SIGN UP</a
             >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-nav" [routerLink]="['/about']">ABOUT</a>
           </li>
         </ul>
       </div>

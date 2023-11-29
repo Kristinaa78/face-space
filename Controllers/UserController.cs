@@ -65,6 +65,15 @@ namespace face_space.Controllers
             return Ok(result);
         }
 
+        [HttpDelete("sign-out")]
+        public async Task<IActionResult> SignOut()
+        {
+            HttpContext.Response.Cookies.Delete("Token");
+
+            //Response.Cookies.Delete("access_token");
+            return Ok();
+        }
+
         [Authorize]
         [HttpGet()]
         public async Task<IActionResult> GetUsers()

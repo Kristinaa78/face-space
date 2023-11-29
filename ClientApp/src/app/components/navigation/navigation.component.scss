@@ -41,6 +41,25 @@ a.navbar-brand {
   text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
 }
+
 .text-nav:hover {
-  text-shadow:  #fac1e5 0 0 15px;
+  background-image: -webkit-linear-gradient(
+    0deg,
+    #ef63cf 18%,
+    #ee59d2 0%,
+    #f76bc3 100%
+  );
+}
+
+.sign-out-button {
+  font-weight: 500 !important;
+}
+
+.sign-out-button:hover {
+  background-image: -webkit-linear-gradient(
+    0deg,
+    #ef63cf 18%,
+    #ee59d2 0%,
+    #f76bc3 100%
+  );
 }
