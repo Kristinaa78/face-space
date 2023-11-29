@@ -1,6 +1,124 @@
-<p>
-  login works!
-</p>
-<input type="text" [(ngModel)]="user.username">
-<input type="text" [(ngModel)]="user.password">
-<button (click)="submitLogin()">Login</button>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Konkhmer+Sleokchher&display=swap"
+  rel="stylesheet"
+/>
+<link
+  href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300&display=swap"
+  rel="stylesheet"
+/>
+
+<p-toast></p-toast>
+<div class="container-fluid col-12">
+  <div class="row d-flex justify-content-center">
+    <div class="card col-4 d-flex flex-column justify-content-center mt-4 px-4">
+      <h3
+        style="font-family: 'Konkhmer Sleokchher', sans-serif"
+        class="text-uppercase text-center mt-3"
+      >
+        LOGIN
+      </h3>
+
+      <div class="form-group d-flex flex-column">
+        <label
+          for="username"
+          class="mt-2"
+          style="font-size: 18px; font-weight: 500"
+          >Username</label
+        >
+        <input
+          type="text"
+          id="username"
+          required
+          pInputText
+          [(ngModel)]="user.username"
+          class="mt-1"
+        />
+      </div>
+
+      <div class="form-group d-flex flex-column">
+        <label
+          for="username"
+          class="mt-2"
+          style="font-size: 18px; font-weight: 500"
+          >Password</label
+        >
+        <input
+          type="password"
+          id="username"
+          required
+          pInputText
+          [(ngModel)]="user.password"
+          class="mt-1"
+        />
+      </div>
+
+      <div *ngIf="registration" class="form-group d-flex flex-column">
+        <label
+          for="email"
+          class="mt-2"
+          style="font-size: 18px; font-weight: 500"
+          >E-mail</label
+        >
+        <input
+          type="email"
+          id="email"
+          required
+          pInputText
+          [(ngModel)]="user.email"
+          class="mt-1"
+        />
+      </div>
+
+      <div class="col-12 d-flex flex-row my-3">
+        <div class="col-6">
+          <div *ngIf="!registration">
+            <button
+              pButton
+              pRipple
+              label="Sign up"
+              class="mt-4 p-button-text p-button-primary p-button-outlined text-uppercase w-100"
+              (click)="registration = true"
+            ></button>
+          </div>
+          <div *ngIf="registration">
+            <button
+              pButton
+              pRipple
+              label="Login"
+              class="mt-4 p-button-text p-button-secondary p-button-outlined text-uppercase w-100"
+              (click)="registration = false"
+            ></button>
+          </div>
+        </div>
+        <div class="col-6">
+          <div *ngIf="!registration">
+            <button
+              [disabled]="user.username === '' || user.password === ''"
+              pButton
+              pRipple
+              label="Login"
+              class="mt-4 p-button-primary text-uppercase w-100"
+              (click)="submitLogin()"
+            ></button>
+          </div>
+          <div *ngIf="registration">
+            <button
+              [disabled]="
+                user.username === '' ||
+                user.password === '' ||
+                user.email === ''
+              "
+              pButton
+              pRipple
+              label="Sign up"
+              class="mt-4 p-button-secondary text-uppercase w-100"
+              (click)="submitRegistration()"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
