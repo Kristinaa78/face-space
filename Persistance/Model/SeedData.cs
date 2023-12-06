@@ -9,20 +9,20 @@ namespace face_space.Persistance.Model
     {
         public static async Task SeedUsers(IUserRepository repository, IRoleRepository roleRepository)
         {
-            if ((await repository.getUsers()).Count != 0) 
+            if ((await repository.GetUsers()).Count != 0) 
                 return;
 
-            await repository.createUser(new RegisterDto { 
+            await repository.CreateUser(new RegisterDTO { 
                 Username = "jano",
                 Password = "feri",
             });
-            await repository.createUser(new RegisterDto { 
+            await repository.CreateUser(new RegisterDTO { 
                 Username = "feri",
                 Password = "jano",
             });
 
-            await roleRepository.createRole("Admin");
-            await roleRepository.createRole("User");
+            await roleRepository.CreateRole("Admin");
+            await roleRepository.CreateRole("User");
         }
     }
 }

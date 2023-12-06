@@ -8,6 +8,7 @@ using face_space.Persistance.Model;
 using face_space.Application.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using face_space.Exceptions;
 
 namespace face_space.Controllers
 {
@@ -22,55 +23,60 @@ namespace face_space.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> CreateUser([FromBody] RegisterDto register)
+        public async Task<IActionResult> CreateUser([FromBody] RegisterDTO register)
         {
-            UserDto result;
+            UserDTO result;
             try
             {
-                result = await _service.createUser(register);
+                result = await _service.CreateUser(register);
+                HttpContext.Response.Cookies.Append(
+                   "Token",
+                   result.Token,
+                   new CookieOptions
+                   {
+                       HttpOnly = true
+                   });
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+                if (ex is UsernameAlreadyInUseException)
+                    return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
+                else
+                    return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
-            HttpContext.Response.Cookies.Append(
-                "Token",
-                result.Token,
-                new CookieOptions
-                {
-                    HttpOnly = true
-                });
-            return Ok(result);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> loginUser([FromBody] LoginDto login)
+        public async Task<IActionResult> LoginUser([FromBody] LoginDTO login)
         {
-            UserDto result;
+            UserDTO result;
             try
             {
-                result = await _service.loginUser(login);
+                result = await _service.LoginUser(login);
+
+                HttpContext.Response.Cookies.Append(
+                    "Token",
+                    result.Token,
+                    new CookieOptions
+                    {
+                        HttpOnly = true
+                    });
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+                if (ex is UserNotFoundException)
+                    return StatusCode((int)HttpStatusCode.Unauthorized, ex.Message);
+                else
+                    return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
-            HttpContext.Response.Cookies.Append(
-                "Token",
-                result.Token,
-                new CookieOptions
-                {
-                    HttpOnly = true
-                });
-            return Ok(result);
         }
 
         [HttpDelete("sign-out")]
         public async Task<IActionResult> SignOut()
         {
             HttpContext.Response.Cookies.Delete("Token");
-
-            //Response.Cookies.Delete("access_token");
             return Ok();
         }
 
@@ -78,10 +84,10 @@ namespace face_space.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetUsers()
         {
-            List<UserDto> result;
+            List<UserDTO> result;
             try
             {
-                result = await _service.getUsers();
+                result = await _service.GetUsers();
             }
             catch (Exception ex)
             {
@@ -94,15 +100,15 @@ namespace face_space.Controllers
         [HttpGet("user")]
         public async Task<IActionResult> GetUser()
         {
-            string result = User.Identity.Name;
             try
             {
+                string result = User.Identity.Name;
+                return Ok(new { name = result });
             }
             catch (Exception ex)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
-            return Ok(new { name = result});
         }
     }
 }

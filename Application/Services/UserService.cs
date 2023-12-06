@@ -27,27 +27,29 @@ namespace face_space.Application.Services
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Key"]));
         }
 
-        public async Task<UserDto> createUser(RegisterDto registerDto)
+        public async Task<UserDTO> CreateUser(RegisterDTO registerDto)
         {
-            User user = await _repository.createUser(registerDto);
-            return new UserDto
+            User user = await _repository.CreateUser(registerDto);
+            return new UserDTO
             {
                 Username = user.Username,
                 Token = await CreateToken(user)
             };
         }
 
-        public async Task<List<UserDto>> getUsers()
+        public async Task<List<UserDTO>> GetUsers()
         {
-            return (await _repository.getUsers()).Select(x => new UserDto { 
-                Username = x.Username,
-            }).ToList();
+            return (await _repository.GetUsers()).Select(x =>
+                new UserDTO { 
+                    Username = x.Username,
+                })
+                .ToList();
         }
 
-        public async Task<UserDto> loginUser(LoginDto login)
+        public async Task<UserDTO> LoginUser(LoginDTO login)
         {
-            User user = await _repository.loginUser(login);
-            return new UserDto
+            User user = await _repository.LoginUser(login);
+            return new UserDTO
             {
                 Username = user.Username,
                 Token = await CreateToken(user)
@@ -62,7 +64,7 @@ namespace face_space.Application.Services
                 new Claim(JwtRegisteredClaimNames.UniqueName, appUser.Username)
             };
 
-            var roles = (await _roleRepository.getRoles(appUser.Id)).Select(x => x.Name);
+            var roles = (await _roleRepository.GetRoles(appUser.Id)).Select(x => x.Name);
 
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 

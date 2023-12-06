@@ -15,7 +15,7 @@ namespace face_space.Persistance.Repositories
             _context = context;
         }
 
-        public async Task<Role> createRole(string name)
+        public async Task<Role> CreateRole(string name)
         {
             var role = new Role() { 
                 Name = name
@@ -26,7 +26,7 @@ namespace face_space.Persistance.Repositories
             return role;
         }
 
-        public async Task<List<Role>> getRoles(int userId)
+        public async Task<List<Role>> GetRoles(int userId)
         {
             return await _context.UserRoles
                 .Include(x => x.Role)

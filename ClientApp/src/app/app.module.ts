@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -28,7 +29,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +40,7 @@ import { ButtonModule } from 'primeng/button';
   ],
   imports: [
     RouterModule.forRoot(AppRoutingModule),
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
@@ -48,7 +49,7 @@ import { ButtonModule } from 'primeng/button';
     ToastModule,
     InputTextModule,
     CardModule,
-    ButtonModule
+    ButtonModule,
   ],
   providers: [UserService, MessageService, DatePipe],
   bootstrap: [AppComponent],

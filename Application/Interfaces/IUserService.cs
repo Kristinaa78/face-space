@@ -7,8 +7,8 @@ namespace face_space.Application.Interfaces
 {
     public interface IUserService
     {
-        public Task<UserDto> createUser(RegisterDto registerDto);
-        public Task<List<UserDto>> getUsers();
-        public Task<UserDto> loginUser(LoginDto login);
+        public Task<UserDTO> CreateUser(RegisterDTO registerDto);
+        public Task<List<UserDTO>> GetUsers();
+        public Task<UserDTO> LoginUser(LoginDTO login);
     }
 }

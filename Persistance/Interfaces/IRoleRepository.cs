@@ -6,7 +6,7 @@ namespace face_space.Persistance.Interfaces
 {
     public interface IRoleRepository
     {
-        public Task<Role> createRole(string name);
-        public Task<List<Role>> getRoles(int userId);
+        public Task<Role> CreateRole(string name);
+        public Task<List<Role>> GetRoles(int userId);
     }
 }

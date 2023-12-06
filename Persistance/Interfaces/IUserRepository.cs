@@ -7,8 +7,8 @@ namespace face_space.Persistance.Interfaces
 {
     public interface IUserRepository
     {
-        public Task<User> createUser(RegisterDto registerDto);
-        public Task<List<User>> getUsers();
-        Task<User> loginUser(LoginDto loginDto);
+        public Task<User> CreateUser(RegisterDTO registerDto);
+        public Task<List<User>> GetUsers();
+        Task<User> LoginUser(LoginDTO loginDto);
     }
 }

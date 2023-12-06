@@ -1,4 +1,5 @@
 ﻿using face_space.Application.Dtos;
+using face_space.Exceptions;
 using face_space.Persistance.Interfaces;
 using face_space.Persistance.Model;
 using Microsoft.EntityFrameworkCore;
@@ -17,12 +18,16 @@ namespace face_space.Persistance.Repositories
             _context = context;
         }
 
-        public async Task<User> createUser(RegisterDto registerDto)
+        public async Task<User> CreateUser(RegisterDTO registerDTO)
         {
+            List<User> users = await GetUsers();
+            if (users.Select(x => x.Username).ToList().Contains(registerDTO.Username))
+                throw new UsernameAlreadyInUseException(registerDTO.Username);
+
             var user = _context.Users.Add(new User
             {
-                Username = registerDto.Username,
-                Password = registerDto.Password,
+                Username = registerDTO.Username,
+                Password = registerDTO.Password,
                 createdAt = DateTime.Now
             });
 
@@ -31,14 +36,24 @@ namespace face_space.Persistance.Repositories
             return user.Entity;
         }
 
-        public async Task<List<User>> getUsers()
+        public async Task<List<User>> GetUsers()
         {
             return await _context.Users.ToListAsync();
         }
 
-        public async Task<User> loginUser(LoginDto loginDto)
+        public async Task<User> LoginUser(LoginDTO loginDTO)
         {
-            return await _context.Users.FirstAsync(x => x.Username.Equals(loginDto.Username) && x.Password.Equals(loginDto.Password));
+            User result = await _context
+                .Users
+                .FirstOrDefaultAsync(x =>
+                    x.Username.Equals(loginDTO.Username) &&
+                    x.Password.Equals(loginDTO.Password)
+                );
+
+            if (result == null)
+                throw new UserNotFoundException(loginDTO.Username);
+
+            return result;
         }
     }
 }
