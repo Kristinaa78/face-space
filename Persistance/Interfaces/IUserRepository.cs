@@ -9,6 +9,7 @@ namespace face_space.Persistance.Interfaces
     {
         public Task<User> CreateUser(RegisterDTO registerDto);
         public Task<List<User>> GetUsers();
-        Task<User> LoginUser(LoginDTO loginDto);
+        public Task<User> LoginUser(LoginDTO loginDto);
+        public Task<bool> ResetPassword(RegisterDTO userDTO);
     }
 }

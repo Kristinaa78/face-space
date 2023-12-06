@@ -55,5 +55,22 @@ namespace face_space.Persistance.Repositories
 
             return result;
         }
+
+        public async Task<bool> ResetPassword(RegisterDTO userDTO)
+        {
+            User user = await _context
+                .Users
+                .FirstOrDefaultAsync(x =>
+                    x.Username.Equals(userDTO.Username)
+                );
+
+            if (user == null)
+                throw new UserNotFoundException(userDTO.Username);
+
+            user.Password = userDTO.Password;
+
+            await _context.SaveChangesAsync();
+            return true; // success
+        }
     }
 }

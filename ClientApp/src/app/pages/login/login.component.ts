@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   submitted: boolean = false;
   registration: boolean = false;
+  restorePassword: boolean = false;
 
   constructor(
     private messageService: MessageService,
@@ -71,5 +72,31 @@ export class LoginComponent implements OnInit {
 
   public switchToRegistration() {
     this.registration = true;
+  }
+
+  public forgottenPassword() {
+    this.restorePassword = true;
+    this.registration = false;
+  }
+
+  public resetPassword() {
+    this.userService.resetPassword(this.user).subscribe({
+      next: (x) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Password was successfully updated.',
+        });
+        this.restorePassword = false;
+        this.registration = false;
+      },
+      error: (err: HttpErrorResponse) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.error,
+        });
+      },
+    });
   }
 }

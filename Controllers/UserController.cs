@@ -110,5 +110,23 @@ namespace face_space.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] RegisterDTO userDTO)
+        {
+            try
+            {
+                return Ok(await _service.ResetPassword(userDTO));
+            }
+            catch (Exception ex)
+            {
+                if (ex is UserNotFoundException)
+                    return StatusCode((int)HttpStatusCode.Unauthorized, ex.Message);
+                else
+                    return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+
     }
 }

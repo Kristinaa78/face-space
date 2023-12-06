@@ -82,5 +82,10 @@ namespace face_space.Application.Services
 
             return tokenHandler.WriteToken(token);
         }
+
+        public async Task<bool> ResetPassword(RegisterDTO userDTO)
+        {
+            return await _repository.ResetPassword(userDTO);
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace face_space.Application.Interfaces
         public Task<UserDTO> CreateUser(RegisterDTO registerDto);
         public Task<List<UserDTO>> GetUsers();
         public Task<UserDTO> LoginUser(LoginDTO login);
+        public Task<bool> ResetPassword(RegisterDTO userDTO);
     }
 }
