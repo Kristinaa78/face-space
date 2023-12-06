@@ -13,7 +13,6 @@ import { AppRoutingModule } from './app-routing.module';
 // app-components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { RoomComponent } from './pages/room/room.component';
@@ -28,15 +27,16 @@ import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import { RoomsListComponent } from './pages/rooms-list/rooms-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent,
     NavigationComponent,
     WelcomeComponent,
     RoomComponent,
+    RoomsListComponent
   ],
   imports: [
     RouterModule.forRoot(AppRoutingModule),

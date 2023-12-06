@@ -42,12 +42,19 @@
           <li
             *ngIf="userService.user != null"
             class="nav-item d-flex align-items-center"
+          ></li>
+          <li
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+            [routerLinkActiveOptions]="{ exact: true }"
           >
-            <button
-              pButton
-              class="sign-out-button py-1"
-              (click)="signOut()"
-            >
+            <a class="nav-link text-nav" [routerLink]="['/rooms-list']">ROOMS</a>
+          </li>
+          <li
+            *ngIf="userService.user != null"
+            class="nav-item d-flex align-items-center"
+          >
+            <button pButton class="sign-out-button py-1" (click)="signOut()">
               SIGN OUT
             </button>
           </li>
