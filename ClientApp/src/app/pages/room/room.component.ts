@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import Peer from 'peerjs';
 import { ConferenceHubService } from 'src/app/services/conference/conference-hub.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -24,10 +25,11 @@ export class RoomComponent implements OnInit {
   recordingName: string = "";
   
   constructor(public conferenceHubService: ConferenceHubService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.conferenceHubService.createHubConnection("1");
+    this.conferenceHubService.createHubConnection(this.route.snapshot.params['id']);
     this.createLocalStream();
 
     this.peer = new Peer(this.userService.user);

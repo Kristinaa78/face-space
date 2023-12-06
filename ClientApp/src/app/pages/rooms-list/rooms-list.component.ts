@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { RoomService } from 'src/app/services/room/room.service';
 
 @Component({
   selector: 'app-rooms-list',
@@ -7,16 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoomsListComponent implements OnInit {
 
-  constructor() { }
+  rooms!: any[];
+  constructor(private roomService: RoomService,
+    private router: Router) { }
 
   ngOnInit() {
+    this.reloadRooms();
   }
 
-  joinRoom() {
-    console.log('debug');
+  reloadRooms() {
+    this.roomService.getRooms().subscribe(x => {
+      this.rooms = x;
+    });
+  }
+
+  joinRoom(roomId: number) {
+    this.router.navigate(["/room/" + roomId]);
   }
 
   createOwnRoom() {
-    console.log('debug');
+    this.roomService.createRoom("roomecka").subscribe(x => {
+      this.reloadRooms();
+    });
   }
 }

@@ -27,6 +27,12 @@ export class ConferenceHubService {
     });
   }
 
+  stopHubConnection(){
+    if(this.hubConnection){
+      this.hubConnection.stop().catch(error => console.log(error));
+    }
+  }
+
   async sendMessage(content: string){
     return this.hubConnection.invoke('SendMessage', content)
       .catch(error => console.log(error));

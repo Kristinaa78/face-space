@@ -9,7 +9,7 @@ export const AppRoutingModule: Routes = [
         path: 'login', component: LoginComponent, resolve: {}
     },
     {
-        path: 'room', component: RoomComponent, resolve: {}
+        path: 'room/:id', component: RoomComponent, resolve: {}
     },
     {
         path: 'rooms-list', component: RoomsListComponent, resolve: {}

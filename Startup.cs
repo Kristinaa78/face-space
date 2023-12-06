@@ -70,9 +70,11 @@ namespace face_space
             });
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoomService, RoomService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
 
             services.AddSignalR();
         }
