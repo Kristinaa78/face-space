@@ -46,12 +46,14 @@ namespace face_space.Persistance.Repositories
             User result = await _context
                 .Users
                 .FirstOrDefaultAsync(x =>
-                    x.Username.Equals(loginDTO.Username) &&
-                    x.Password.Equals(loginDTO.Password)
-                );
+                    x.Username.Equals(loginDTO.Username)
+                 );
 
             if (result == null)
                 throw new UserNotFoundException(loginDTO.Username);
+
+            if (!result.Password.Equals(loginDTO.Password))
+                throw new IncorrectLoginDataException();
 
             return result;
         }

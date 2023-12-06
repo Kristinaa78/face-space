@@ -41,7 +41,7 @@ namespace face_space.Controllers
             catch (Exception ex)
             {
                 if (ex is UsernameAlreadyInUseException)
-                    return StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
+                    return StatusCode((int)HttpStatusCode.Conflict, ex.Message);
                 else
                     return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
@@ -67,6 +67,8 @@ namespace face_space.Controllers
             catch (Exception ex)
             {
                 if (ex is UserNotFoundException)
+                    return StatusCode((int)HttpStatusCode.NotFound, ex.Message);
+                else if (ex is IncorrectLoginDataException)
                     return StatusCode((int)HttpStatusCode.Unauthorized, ex.Message);
                 else
                     return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
@@ -121,7 +123,7 @@ namespace face_space.Controllers
             catch (Exception ex)
             {
                 if (ex is UserNotFoundException)
-                    return StatusCode((int)HttpStatusCode.Unauthorized, ex.Message);
+                    return StatusCode((int)HttpStatusCode.NotFound, ex.Message);
                 else
                     return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }

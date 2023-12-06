@@ -26,6 +26,6 @@ export class UserService {
   }
 
   public getUser(): Observable<any> {
-    return this.httpClient.get<string>('api/user/user');
+    return this.httpClient.get<string>('api/user/user/');
   }
 }
