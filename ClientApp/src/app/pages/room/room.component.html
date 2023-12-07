@@ -7,6 +7,7 @@
 <button (click)="callThem()">Join</button>
 <button (click)="startRecording()" [hidden]="recording">🔴 Start recording</button>
 <button (click)="stopRecording()" [hidden]="!recording">🔲 Stop recording</button>
+<button (click)="muteVideo()">muteVideo</button>
 <br>
 <video #videoPlayer width="100%" height="170" controls></video>
 <div *ngFor="let video of videos">

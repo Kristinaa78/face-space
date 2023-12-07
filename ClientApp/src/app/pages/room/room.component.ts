@@ -23,6 +23,7 @@ export class RoomComponent implements OnInit {
   mediaRecorder: MediaRecorder | null = null;
   recordedBlobs: any[] = [];
   recordingName: string = "";
+  enableVideo = true;
   
   constructor(public conferenceHubService: ConferenceHubService,
               private userService: UserService,
@@ -125,5 +126,12 @@ export class RoomComponent implements OnInit {
 
   onLoadedMetadata(event: Event) {
     (event.target as HTMLVideoElement).play();
+  }
+
+  muteVideo() {
+    this.enableVideo = !this.enableVideo
+    if (this.stream.getVideoTracks()[0]) {
+      this.stream.getVideoTracks()[0].enabled = this.enableVideo;
+    }
   }
 }
