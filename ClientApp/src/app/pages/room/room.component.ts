@@ -5,6 +5,11 @@ import Peer from 'peerjs';
 import { ConferenceHubService } from 'src/app/services/conference/conference-hub.service';
 import { UserService } from 'src/app/services/user/user.service';
 
+type Video = {
+  stream: MediaStream,
+  user: string,
+};
+
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
@@ -15,11 +20,15 @@ export class RoomComponent implements OnInit {
   public newMessage = "";
 
   public recording = false;
+  public screenSharing = false;
 
   @ViewChild('videoPlayer') localvideoPlayer!: ElementRef;
   stream: any;
+  shareScreenStream: any;
   peer: any;
-  videos: Set<MediaStream> = new Set<MediaStream>();
+  shareScreenPeer: any;
+  videos: Video[] = [];
+  sharingTo: any[] = [];
   mediaRecorder: MediaRecorder | null = null;
   recordedBlobs: any[] = [];
   recordingName: string = "";
@@ -39,20 +48,33 @@ export class RoomComponent implements OnInit {
       call.answer(this.stream);
 
       call.on('stream', (otherUserVideoStream: MediaStream) => {
-        this.addOtherUserVideo(otherUserVideoStream);
+        this.addOtherUserVideo(otherUserVideoStream, call.metadata.userId);
       });
+    });
+
+    this.shareScreenPeer = new Peer('screen_' + this.userService.user);
+
+    this.shareScreenPeer.on('call', (call: any) => {
+      call.answer(this.shareScreenStream);
+
+      call.on('stream', (otherUserVideoStream: MediaStream) => {
+        this.shareScreenStream = otherUserVideoStream;
+        this.sharingStarted();
+      });
+
+      call.on('close', () => this.sharingStopped());
     });
   }
 
   public callThem() {
     console.log(this.conferenceHubService.usersInRoom);
-    this.videos.clear();
+    this.videos = [];
     this.conferenceHubService.usersInRoom.forEach((user: any) => {
       const call = this.peer.call(user, this.stream, {
         metadata: { userId: this.userService.user },
       });
       call.on('stream', (otherUserVideoStream: MediaStream) => {
-        this.addOtherUserVideo(otherUserVideoStream);
+        this.addOtherUserVideo(otherUserVideoStream, user);
       });
     });
   }
@@ -103,6 +125,36 @@ export class RoomComponent implements OnInit {
     this.mediaRecorder?.stop();
   }
 
+  async shareScreen() {
+    if (this.screenSharing) {
+      return;
+    }
+
+    let options = {
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true
+      },
+      video: true,
+    };
+
+    let mediaStream = await navigator.mediaDevices.getDisplayMedia(options);
+    this.shareScreenStream = mediaStream;
+
+    this.sharingTo = [];
+    this.videos.forEach(v => {
+      const call = this.shareScreenPeer.call('screen_' + v.user, mediaStream);
+      this.sharingTo.push(call);
+    });
+
+    mediaStream.getVideoTracks()[0].addEventListener('ended', () => {
+      this.sharingTo.forEach(v => v.close());
+      this.sharingStopped();
+    });
+
+    this.sharingStarted();
+  }
+
   onRecorderDataAvailable(event: BlobEvent) {
     if (event.data && event.data.size > 0) {
       this.recordedBlobs.push(event.data);
@@ -120,8 +172,18 @@ export class RoomComponent implements OnInit {
     link.remove();
   }
 
-  addOtherUserVideo(stream: MediaStream) {
-    this.videos.add(stream);
+  sharingStarted() {
+    this.screenSharing = true;
+  }
+
+  sharingStopped() {
+    this.screenSharing = false;
+  }
+
+  addOtherUserVideo(stream: MediaStream, user: string) {
+    if (!this.videos.map(x => x.user).includes(user)) {
+      this.videos.push({stream, user});
+    }
   }
 
   onLoadedMetadata(event: Event) {
