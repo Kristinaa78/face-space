@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Room } from 'src/app/services/room/room';
+import { Room, RoomSettings } from 'src/app/services/room/room';
 import { RoomService } from 'src/app/services/room/room.service';
 import { RoomSettingsComponent } from './room-settings/room-settings.component';
 
@@ -13,7 +13,7 @@ import { RoomSettingsComponent } from './room-settings/room-settings.component';
   providers: [DialogService],
 })
 export class RoomsListComponent implements OnInit {
-  rooms!: Room[];
+  rooms!: RoomSettings[];
   ref: DynamicDialogRef | undefined;
 
   constructor(

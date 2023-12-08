@@ -12,9 +12,9 @@ export class ConferenceHubService {
 
   constructor() { }
 
-  createHubConnection(roomId: string){
+  createHubConnection(roomId: string, password: string){
     this.hubConnection = new HubConnectionBuilder()
-    .withUrl('hub?roomId=' + roomId, {}).withAutomaticReconnect().build()
+    .withUrl('hub?roomId=' + roomId + '&password=' + password, {}).withAutomaticReconnect().build()
 
     this.hubConnection.start().catch(err => console.log(err));
 

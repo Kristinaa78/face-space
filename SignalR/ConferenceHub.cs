@@ -23,9 +23,10 @@ namespace face_space.SignalR
         {
             var httpContext = Context.GetHttpContext();
             var roomId = httpContext.Request.Query["roomId"].ToString();
+            var password = httpContext.Request.Query["password"].ToString();
             var username = Context.User.FindFirst(ClaimTypes.Name)?.Value;
             
-            await _roomRepository.JoinRoom(Int32.Parse(roomId), username, Context.ConnectionId);
+            await _roomRepository.JoinRoom(Int32.Parse(roomId), username, Context.ConnectionId, password);
 
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
 

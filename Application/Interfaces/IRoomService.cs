@@ -6,8 +6,8 @@ namespace face_space.Application.Interfaces
 {
     public interface IRoomService
     {
-        Task<RoomDTO> CreateRoom(string roomName, string user);
+        Task<RoomDTO> CreateRoom(RoomDTO room, string user);
         Task DeleteRoom(int roomId, string user);
-        Task<List<RoomDTO>> GetRooms();
+        Task<List<RoomDTO>> GetRooms(string user);
     }
 }

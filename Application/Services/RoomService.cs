@@ -23,14 +23,17 @@ namespace face_space.Application.Services
             _roomRepository = roomRepository;
         }
 
-        public async Task<RoomDTO> CreateRoom(string roomName, string user)
+        public async Task<RoomDTO> CreateRoom(RoomDTO room, string user)
         {
-            var room = await _roomRepository.CreateRoom(roomName, user);
+            var newRoom = await _roomRepository.CreateRoom(room, user);
             return new RoomDTO
-            { 
-                Name = room.Name,
-                Count = room.Count,
+            {
                 Id = room.Id,
+                RoomName = newRoom.RoomName,
+                RoomPassword = newRoom.Password,
+                Participants = newRoom.Participants,
+                EnableChat = newRoom.EnableChat,
+                EnableVideo = newRoom.EnableVideo,
             };
         }
 
@@ -39,13 +42,16 @@ namespace face_space.Application.Services
             await _roomRepository.DeleteRoom(roomId, user);
         }
 
-        public async Task<List<RoomDTO>> GetRooms()
+        public async Task<List<RoomDTO>> GetRooms(string user)
         {
-            return (await _roomRepository.GetRooms()).Select(room => new RoomDTO
+            return (await _roomRepository.GetRooms(user)).Select(room => new RoomDTO
             {
-                Name = room.Name,
-                Count = room.Count,
                 Id = room.Id,
+                RoomName = room.RoomName,
+                RoomPassword = room.Password,
+                Participants = room.Participants,
+                EnableChat = room.EnableChat,
+                EnableVideo = room.EnableVideo,
             }).ToList();
         }
     }

@@ -33,13 +33,19 @@ export class RoomComponent implements OnInit {
   recordedBlobs: any[] = [];
   recordingName: string = "";
   enableVideo = true;
+  password = "";
   
   constructor(public conferenceHubService: ConferenceHubService,
               private userService: UserService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.conferenceHubService.createHubConnection(this.route.snapshot.params['id']);
+
+  }
+
+
+  public joinRoom() {
+    this.conferenceHubService.createHubConnection(this.route.snapshot.params['id'], this.password);
     this.createLocalStream();
 
     this.peer = new Peer(this.userService.user);

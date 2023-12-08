@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { RoomService } from 'src/app/services/room/room.service';
 import { User } from 'src/app/services/user/user';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -22,6 +23,7 @@ export class RoomSettingsComponent implements OnInit {
   constructor(
     public dynamicRef: DynamicDialogRef,
     private userService: UserService,
+    private roomService: RoomService,
     private messageService: MessageService,
     public config: DynamicDialogConfig,
     private fb: FormBuilder
@@ -53,5 +55,9 @@ export class RoomSettingsComponent implements OnInit {
 
   createRoom() {
     console.log(this.roomSettingsForm.value);
+    this.roomService.createRoom(this.roomSettingsForm.value).subscribe((x) => {
+      //this.reloadRooms();
+      this.dynamicRef.close();
+    });
   }
 }

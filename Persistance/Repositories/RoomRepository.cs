@@ -1,6 +1,8 @@
-﻿using face_space.Persistance.Interfaces;
+﻿using face_space.Application.Dtos;
+using face_space.Persistance.Interfaces;
 using face_space.Persistance.Model;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,17 +16,20 @@ namespace face_space.Persistance.Repositories
         {
             _context = context;
         }
-        public async Task<Room> CreateRoom(string name, string username)
+        public async Task<Room> CreateRoom(RoomDTO room, string username)
         {
             var user = _context.Users.First(x => x.Username.Equals(username));
 
-            if (_context.Rooms.Any(x => x.Name.Equals(name)))
+            if (_context.Rooms.Any(x => x.RoomName.Equals(room.RoomName)))
                 throw new System.Exception("Duplicit room name.");
 
             var res = _context.Rooms.Add(new Room
             {
-                Name = name,
-                Count = 0,
+                RoomName = room.RoomName,
+                Password = room.RoomPassword,
+                Participants = room.Participants,
+                EnableChat = room.EnableChat,
+                EnableVideo = room.EnableVideo,
                 AdminId = user.Id
             });
 
@@ -43,17 +48,19 @@ namespace face_space.Persistance.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Room>> GetRooms()
+        public async Task<List<Room>> GetRooms(string user)
         {
             return await _context.Rooms.ToListAsync();
         }
 
-        public async Task JoinRoom(int roomId, string username, string connectionId)
+        public async Task JoinRoom(int roomId, string username, string connectionId, string password)
         {
             var user = _context.Users.First(x => x.Username.Equals(username));
+            if (!(_context.Rooms.First(x => x.Id == roomId).AdminId == user.Id || _context.Rooms.First(x => x.Id == roomId).Password.Equals(password)))
+                throw new System.Exception("Bad password!");
 
-            _context.Connections.Add(new Connection 
-            { 
+            _context.Connections.Add(new Connection
+            {
                 ConnectionId = connectionId,
                 RoomId = roomId,
                 UserId = user.Id

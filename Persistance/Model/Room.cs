@@ -10,8 +10,12 @@ namespace face_space.Persistance.Model
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string RoomName { get; set; }
+        public string Password { get; set; }
+        public int Participants { get; set; }
         public int Count { get; set; }
+        public bool EnableVideo { get; set; }
+        public bool EnableChat { get; set; }
         public int AdminId { get; set; }
 
         public User User { get; set; }

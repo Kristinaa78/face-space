@@ -23,14 +23,14 @@ namespace face_space.Controllers
             _service = service;
         }
 
-        [HttpPost("create/{roomName}")]
-        public async Task<IActionResult> CreateRoom([FromRoute] string roomName)
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateRoom([FromBody] RoomDTO room)
         {
             RoomDTO result;
             try
             {
                 string user = User.Identity.Name;
-                result = await _service.CreateRoom(roomName, user);
+                result = await _service.CreateRoom(room, user);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -60,7 +60,8 @@ namespace face_space.Controllers
             List<RoomDTO> result;
             try
             {
-                result = await _service.GetRooms();
+                string user = User.Identity.Name;
+                result = await _service.GetRooms(user);
             }
             catch (Exception ex)
             {

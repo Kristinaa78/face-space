@@ -5,9 +5,12 @@ export interface Room {
 }
 
 export interface RoomSettings {
+  id: number;
   roomName: string;
   password: string;
   participants: number;
+  count: number;
   enableChat: boolean;
   enableVideo: boolean;
+  invited: boolean;
 }

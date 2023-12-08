@@ -1,10 +1,12 @@
 <p>
   room works!
 </p>
+<input type="text" [(ngModel)]="password">
+<button (click)="joinRoom()">Join</button>
 <p *ngFor="let i of conferenceHubService.messages">{{i.senderUsername}}: {{i.content}}</p>
 <input type="text" [(ngModel)]="newMessage">
 <button (click)="sendMessage()">Send</button>
-<button (click)="callThem()">Join</button>
+<button (click)="callThem()">Join/Connect to other users</button>
 <button (click)="shareScreen()">Share screen</button>
 <button (click)="startRecording()" [hidden]="recording">🔴 Start recording</button>
 <button (click)="stopRecording()" [hidden]="!recording">🔲 Stop recording</button>

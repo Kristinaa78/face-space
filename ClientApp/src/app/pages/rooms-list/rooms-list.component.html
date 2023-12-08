@@ -34,8 +34,8 @@
         <tbody>
           <tr *ngFor="let room of rooms">
             <th scope="row" class="text-center align-middle">{{ room.id }}</th>
-            <td class="text-left align-middle">{{ room.name }}</td>
-            <td class="text-center align-middle">{{ room.count }}/10</td>
+            <td class="text-left align-middle">{{ room.roomName }}</td>
+            <td class="text-center align-middle">{{ room.count }}/ {{ room.participants }}</td>
             <td class="d-flex justify-content-center align-items-center">
               <button
                 pButton
