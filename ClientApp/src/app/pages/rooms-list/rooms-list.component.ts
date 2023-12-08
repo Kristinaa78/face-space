@@ -49,9 +49,5 @@ export class RoomsListComponent implements OnInit {
     this.ref.onClose.subscribe((data) => {
       this.reloadRooms();
     });
-
-    // this.roomService.createRoom('roomecka').subscribe((x) => {
-    //   this.reloadRooms();
-    // });
   }
 }

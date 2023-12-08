@@ -19,4 +19,8 @@ export class RoomService {
   public getRooms(): Observable<RoomSettings[]> {
     return this.httpClient.get<RoomSettings[]>('api/room/all');
   }
+
+  public getRoomById(id: number): Observable<Room> {
+    return this.httpClient.get<Room>('api/room/' + id);
+  }
 }

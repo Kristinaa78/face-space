@@ -18,7 +18,7 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { RoomComponent } from './pages/rooms-list/room/room.component';
 import { RoomsListComponent } from './pages/rooms-list/rooms-list.component';
 import { RoomSettingsComponent } from './pages/rooms-list/room-settings/room-settings.component';
-import { CheckboxModule } from 'primeng/checkbox';
+import { WaitingRoomComponent } from './pages/rooms-list/waiting-room/waiting-room.component';
 
 // app-services
 import { UserService } from './services/user/user.service';
@@ -33,6 +33,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     RoomComponent,
     RoomsListComponent,
     RoomSettingsComponent,
+    WaitingRoomComponent,
   ],
   imports: [
     RouterModule.forRoot(AppRoutingModule),
@@ -60,9 +62,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
     ChipModule,
     CheckboxModule,
     ButtonModule,
-    MultiSelectModule
+    MultiSelectModule,
   ],
   providers: [UserService, MessageService, DatePipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

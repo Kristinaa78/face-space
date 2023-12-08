@@ -12,5 +12,6 @@ namespace face_space.Persistance.Interfaces
         public Task JoinRoom(int roomId, string username, string connectionId, string password);
         public Task LeaveRoom(int roomId, string username);
         public Task<List<Room>> GetRooms(string user);
+        public Task<Room> GetRoomById(int id);
     }
 }

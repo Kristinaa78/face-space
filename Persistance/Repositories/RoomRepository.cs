@@ -1,4 +1,5 @@
 ﻿using face_space.Application.Dtos;
+using face_space.Exceptions;
 using face_space.Persistance.Interfaces;
 using face_space.Persistance.Model;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +52,14 @@ namespace face_space.Persistance.Repositories
         public async Task<List<Room>> GetRooms(string user)
         {
             return await _context.Rooms.ToListAsync();
+        }
+
+        public async Task<Room> GetRoomById(int id)
+        {
+            Room result = await _context.Rooms.FirstOrDefaultAsync(x => x.Id == id);
+            if (result == null)
+                throw new RoomNotFoundException(id);
+            return result;
         }
 
         public async Task JoinRoom(int roomId, string username, string connectionId, string password)

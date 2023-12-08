@@ -1,6 +1,9 @@
 export interface Room {
   id: number;
-  name: string;
+  roomName: string;
+  participants: number;
+  enableChat: boolean;
+  enableVideo: boolean;
   count: number;
 }
 

@@ -54,5 +54,19 @@ namespace face_space.Application.Services
                 EnableVideo = room.EnableVideo,
             }).ToList();
         }
+
+        public async Task<RoomDTO> GetRoomById(int Id)
+        {
+            Room room = await _roomRepository.GetRoomById(Id);
+            return new RoomDTO
+            {
+                Id = room.Id,
+                RoomName = room.RoomName,
+                Participants = room.Participants,
+                EnableChat = room.EnableChat,
+                EnableVideo = room.EnableVideo,
+                Count = room.Count,
+            };
+        }
     }
 }

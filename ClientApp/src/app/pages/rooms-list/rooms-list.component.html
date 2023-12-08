@@ -78,7 +78,9 @@
                 pButton
                 pRipple
                 label="JOIN"
-                (click)="joinRoom(room.id)"
+                [routerLinkActive]="['link-active']"
+                [routerLink]="['/waiting-room']"
+                [queryParams]="{ id: room.id }"
                 style="font-weight: 600"
                 class="join-button p-button-help text-uppercase w-100"
               ></button>

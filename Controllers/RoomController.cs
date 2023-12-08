@@ -69,5 +69,22 @@ namespace face_space.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRoomById([FromRoute] int id)
+        {
+            try
+            {
+                return Ok(await _service.GetRoomById(id));
+            }
+            catch (Exception ex)
+            {
+
+                if (ex is RoomNotFoundException)
+                    return StatusCode((int)HttpStatusCode.NotFound, ex.Message);
+                else
+                    return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
     }
 }
