@@ -20,6 +20,11 @@ namespace face_space.Persistance.Model
                 Username = "feri",
                 Password = "jano",
             });
+            await repository.CreateUser(new RegisterDTO
+            {
+                Username = "tinka",
+                Password = "minka",
+            });
 
             await roleRepository.CreateRole("Admin");
             await roleRepository.CreateRole("User");

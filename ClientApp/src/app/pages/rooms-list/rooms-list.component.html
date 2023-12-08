@@ -23,7 +23,7 @@
       <table class="table mt-2">
         <thead>
           <tr>
-            <th scope="col" class="text-left">ID</th>
+            <th scope="col" class="text-center">ID</th>
             <th scope="col" class="text-left">ROOM NAME</th>
             <th scope="col" class="text-center align-middle">
               <i class="pi pi-users" style="font-size: 1.35rem"></i>
@@ -34,8 +34,45 @@
         <tbody>
           <tr *ngFor="let room of rooms">
             <th scope="row" class="text-center align-middle">{{ room.id }}</th>
-            <td class="text-left align-middle">{{ room.roomName }}</td>
-            <td class="text-center align-middle">{{ room.count }}/ {{ room.participants }}</td>
+            <td class="text-left align-middle">
+              <div class="col-12 d-flex justify-content-between">
+                <div class="col-7">
+                  {{ room.roomName }}
+                </div>
+                <div
+                  class="col-5 d-flex justify-content-end align-items-center"
+                >
+                  <i
+                    *ngIf="room.roomPassword.length > 0"
+                    style="margin-right: 10px"
+                    class="lock-icon fa-solid fa-lock"
+                  ></i>
+
+                  <i
+                    *ngIf="room.enableChat"
+                    style="margin-right: 10px"
+                    class="enabled-icon fa-solid fa-comment"
+                  ></i>
+                  <i
+                    *ngIf="!room.enableChat"
+                    style="margin-right: 10px"
+                    class="disabled-icon fa-solid fa-comment-slash"
+                  ></i>
+
+                  <i
+                    *ngIf="room.enableVideo"
+                    class="enabled-icon fa-solid fa-video"
+                  ></i>
+                  <i
+                    *ngIf="!room.enableVideo"
+                    class="disabled-icon fa-solid fa-video-slash"
+                  ></i>
+                </div>
+              </div>
+            </td>
+            <td class="text-center align-middle">
+              {{ room.count }}/ {{ room.participants }}
+            </td>
             <td class="d-flex justify-content-center align-items-center">
               <button
                 pButton

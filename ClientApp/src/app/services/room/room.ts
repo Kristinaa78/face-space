@@ -7,7 +7,7 @@ export interface Room {
 export interface RoomSettings {
   id: number;
   roomName: string;
-  password: string;
+  roomPassword: string;
   participants: number;
   count: number;
   enableChat: boolean;

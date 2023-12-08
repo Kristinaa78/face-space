@@ -126,7 +126,7 @@
           </ng-container>
           <ng-template #normalFooter>
             <ng-container *ngIf="registration; else loginFooter">
-              <div class="col-6">
+              <div class="col-6 mt-2">
                 <button
                   pButton
                   pRipple
@@ -135,7 +135,7 @@
                   (click)="registration = false"
                 ></button>
               </div>
-              <div class="col-6">
+              <div class="col-6 mt-2">
                 <button
                   [disabled]="
                     user.username === '' ||
