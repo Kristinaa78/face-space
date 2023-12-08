@@ -37,18 +37,17 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-nav" [routerLink]="['/']">Home</a>
+            <a class="nav-link text-nav" [routerLink]="['/']">HOME</a>
           </li>
           <li
             *ngIf="userService.user != null"
             class="nav-item d-flex align-items-center"
-          ></li>
-          <li
-            class="nav-item"
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-nav" [routerLink]="['/rooms-list']">ROOMS</a>
+            <a class="nav-link text-nav" [routerLink]="['/rooms-list']"
+              >ROOMS</a
+            >
           </li>
           <li
             *ngIf="userService.user != null"
@@ -70,7 +69,10 @@
             class="nav-item"
             [routerLinkActive]="['link-active']"
           >
-            <a class="nav-link text-nav" [routerLink]="['/registration']"
+            <a
+              class="nav-link text-nav"
+              [routerLink]="['/login']"
+              [queryParams]="{ registration: true }"
               >SIGN UP</a
             >
           </li>

@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 import { LoginComponent } from "./pages/login/login.component";
 import { WelcomeComponent } from "./pages/welcome/welcome.component";
-import { RoomComponent } from "./pages/room/room.component";
+import { RoomComponent } from "./pages/rooms-list/room/room.component";
 import { RoomsListComponent } from "./pages/rooms-list/rooms-list.component";
 
 export const AppRoutingModule: Routes = [

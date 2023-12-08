@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -15,19 +15,24 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
-import { RoomComponent } from './pages/room/room.component';
+import { RoomComponent } from './pages/rooms-list/room/room.component';
+import { RoomsListComponent } from './pages/rooms-list/rooms-list.component';
+import { RoomSettingsComponent } from './pages/rooms-list/room-settings/room-settings.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 // app-services
 import { UserService } from './services/user/user.service';
 
 // primeng-related
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { MessagesModule } from 'primeng/messages';
 import { MessageService, SharedModule } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { RoomsListComponent } from './pages/rooms-list/rooms-list.component';
+import { ChipModule } from 'primeng/chip';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -36,20 +41,26 @@ import { RoomsListComponent } from './pages/rooms-list/rooms-list.component';
     NavigationComponent,
     WelcomeComponent,
     RoomComponent,
-    RoomsListComponent
+    RoomsListComponent,
+    RoomSettingsComponent,
   ],
   imports: [
     RouterModule.forRoot(AppRoutingModule),
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
     MessagesModule,
     ToastModule,
     InputTextModule,
     CardModule,
+    DynamicDialogModule,
+    ChipModule,
+    CheckboxModule,
     ButtonModule,
+    MultiSelectModule
   ],
   providers: [UserService, MessageService, DatePipe],
   bootstrap: [AppComponent],

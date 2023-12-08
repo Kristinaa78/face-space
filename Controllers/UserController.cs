@@ -83,7 +83,7 @@ namespace face_space.Controllers
         }
 
         [Authorize]
-        [HttpGet()]
+        [HttpGet("all")]
         public async Task<IActionResult> GetUsers()
         {
             List<UserDTO> result;

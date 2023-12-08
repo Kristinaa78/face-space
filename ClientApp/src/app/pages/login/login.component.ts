@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -23,10 +23,14 @@ export class LoginComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private userService: UserService,
-    private router: Router
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.registration = params?.['registration'];
+    });
+  }
 
   public submitLogin() {
     this.userService.login(this.user).subscribe({

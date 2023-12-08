@@ -54,7 +54,7 @@ namespace face_space.Controllers
             }
         }
 
-        [HttpGet()]
+        [HttpGet("all")]
         public async Task<IActionResult> GetRooms()
         {
             List<RoomDTO> result;

@@ -12,7 +12,7 @@
 <p-toast></p-toast>
 <div class="container-fluid col-12">
   <div class="row d-flex justify-content-center">
-    <div class="card col-4 d-flex flex-column justify-content-center mt-4 px-4">
+    <div class="card col-5 d-flex flex-column justify-content-center mt-4 px-4">
       <h3
         style="font-family: 'Konkhmer Sleokchher', sans-serif"
         class="text-uppercase text-center mt-3"
@@ -32,52 +32,28 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row" class="text-left align-middle">1</th>
-            <td class="text-left align-middle">ROOM-1</td>
-            <td class="text-center align-middle">1/10</td>
+          <tr *ngFor="let room of rooms">
+            <th scope="row" class="text-center align-middle">{{ room.id }}</th>
+            <td class="text-left align-middle">{{ room.name }}</td>
+            <td class="text-center align-middle">{{ room.count }}/10</td>
             <td class="d-flex justify-content-center align-items-center">
               <button
                 pButton
                 pRipple
                 label="JOIN"
-                class="join-button p-button-help text-uppercase w-100"
-              ></button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-left align-left">2</th>
-            <td class="text-left align-left">ROOM-2</td>
-            <td class="text-center align-middle">2/10</td>
-            <td class="d-flex justify-content-center align-items-center">
-              <button
-                pButton
-                pRipple
-                label="JOIN"
-                class="join-button p-button-help text-uppercase w-100"
-              ></button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-left align-left">3</th>
-            <td class="text-left align-left">ROOM-3</td>
-            <td class="text-center align-middle">2/10</td>
-            <td class="d-flex justify-content-center align-items-center">
-              <button
-                pButton
-                pRipple
-                label="JOIN"
+                (click)="joinRoom(room.id)"
+                style="font-weight: 600"
                 class="join-button p-button-help text-uppercase w-100"
               ></button>
             </td>
           </tr>
         </tbody>
       </table>
-      <p *ngFor="let room of rooms">{{ room.name }}: {{ room.count }} <button (click)="joinRoom(room.id)">join</button></p>
       <button
         pButton
         pRipple
         label="Create room"
+        style="font-weight: 600"
         class="create-button mt-1 mb-3 p-button-secondary text-uppercase w-100"
         (click)="createOwnRoom()"
       ></button>

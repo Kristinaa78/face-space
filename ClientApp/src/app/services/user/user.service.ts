@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from './user';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +28,9 @@ export class UserService {
 
   public getUser(): Observable<any> {
     return this.httpClient.get<string>('api/user/user/');
+  }
+
+  public getAllUsers(): Observable<User[]> {
+    return this.httpClient.get<User[]>('api/user/all');
   }
 }
