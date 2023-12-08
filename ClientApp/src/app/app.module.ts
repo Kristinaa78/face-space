@@ -63,6 +63,6 @@ import { MultiSelectModule } from 'primeng/multiselect';
     MultiSelectModule
   ],
   providers: [UserService, MessageService, DatePipe],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
