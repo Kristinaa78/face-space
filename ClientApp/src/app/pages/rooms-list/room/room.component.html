@@ -1,4 +1,5 @@
 <div class="container col-12 d-flex flex-row">
+
   <div class="col-9 video-content">
     <div #webcamGrid class="webcam-grid">
       <video #videoPlayer [ngStyle]="{ 'width.px': size }" controls></video>
@@ -44,6 +45,8 @@
         screen
       </button>
 
+      <button (click)="muteAudio()">muteAudio</button>
+      
       <button
         *ngIf="!recording"
         pButton
