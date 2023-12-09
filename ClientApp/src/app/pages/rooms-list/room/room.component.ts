@@ -34,6 +34,7 @@ export class RoomComponent implements OnInit {
   recordedBlobs: any[] = [];
   recordingName: string = '';
   enableVideo = true;
+  enableAudio = true;
 
   password!: string;
   id!: string;
@@ -217,6 +218,13 @@ export class RoomComponent implements OnInit {
     this.enableVideo = !this.enableVideo;
     if (this.stream.getVideoTracks()[0]) {
       this.stream.getVideoTracks()[0].enabled = this.enableVideo;
+    }
+  }
+
+  muteAudio() {
+    this.enableAudio = !this.enableAudio;
+    if (this.stream.getAudioTracks()[0]) {
+      this.stream.getAudioTracks()[0].enabled = this.enableAudio;
     }
   }
 }
