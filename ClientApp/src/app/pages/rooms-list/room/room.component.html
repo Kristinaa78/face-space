@@ -32,31 +32,51 @@
     </div>
   </div>
 
-  <div class="col-3 chat">
-    <div>
-      <div class="chat-header d-flex justify-content-center">
-        <h5>ROOM CHAT</h5>
-      </div>
+  <div class="col-3 chat" style="display: flex; flex-direction:  column; align-content: space-between;">
+    <div >
+      <div>
 
-      <div class="chat-content">
-        <div
-          class="chat-message"
-          *ngFor="let i of conferenceHubService.messages"
-        >
-          <span class="sender"> {{ i.senderUsername }}: </span>
-          <span class="message-content">
-            {{ i.content }}
-          </span>
-
-          <span class="message-timestamp">
-            {{ i.messageSent }}
-          </span>
+        <div class="d-flex justify-content-center">
+          <h5 class="chat-header">ROOM CHAT</h5>
+        </div>
+  
+        <div class="chat-content" id="chat">
+          <div class="" *ngFor="let i of conferenceHubService.messages">
+            <div class="d-flex flex-row justify-content-between">
+              <span class="message-header"> {{ i.senderUsername }}: </span>
+              <span class="message-header">
+                {{ i.messageSent | date : "HH:MM:ss" }}
+              </span>
+            </div>
+            <div class="chat-message">
+              <span class="message-content">
+                {{ i.content }}
+              </span>
+  
+              <span class="message-timestamp">
+                {{ i.messageSent | date : "HH:MM:ss" }}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="chat-input">
-        <input type="text" [(ngModel)]="newMessage" />
-        <button (click)="sendMessage()">Send</button>
+    
+      <div class="p-inputgroup chat-input px-3">
+        <input type="text" pInputText [(ngModel)]="newMessage" />
+        <span class="p-inputgroup-addon py-0 px-0"
+          ><button
+            pButton
+            pRipple
+            style="
+              height: 99% !important;
+              border-bottom-left-radius: 0px;
+              border-top-left-radius: 0px;
+            "
+            class="create-button p-button-warning mx-0 my-0"
+            (click)="sendMessage()"
+          >
+            <i class="fa-solid fa-paper-plane"></i></button
+        ></span>
       </div>
     </div>
   </div>
