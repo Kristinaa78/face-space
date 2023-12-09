@@ -13,6 +13,7 @@ import { RoomService } from 'src/app/services/room/room.service';
 export class RoomPasswordComponent implements OnInit {
   password: string = '';
   roomId: number = 0;
+  webcamId: string = '';
 
   constructor(
     private roomService: RoomService,
@@ -24,6 +25,7 @@ export class RoomPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.roomId = this.config.data.roomId;
+    this.webcamId = this.config.data.webcamId;
   }
 
   checkPassword() {
@@ -34,7 +36,7 @@ export class RoomPasswordComponent implements OnInit {
           this.dynamicRef.close();
           this.router.navigate([
             '/room/' + this.roomId],
-            { queryParams: { password: this.password } },
+            { queryParams: { password: this.password, webcamId: this.webcamId } },
           );
         },
         error: (err: HttpErrorResponse) => {

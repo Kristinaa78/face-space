@@ -35,6 +35,7 @@ export class RoomComponent implements OnInit {
   recordingName: string = '';
   enableVideo = true;
   enableAudio = true;
+  webcamId!: string;
 
   password!: string;
   id!: string;
@@ -49,6 +50,7 @@ export class RoomComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
     this.password = this.route.snapshot.queryParams['password'];
+    this.webcamId = this.route.snapshot.queryParams['webcamId'];
 
     this.roomService.getRoomById(Number(this.id)).subscribe((x) => {
       this.room = x;
@@ -89,12 +91,14 @@ export class RoomComponent implements OnInit {
     console.log(this.conferenceHubService.usersInRoom);
     this.videos = [];
     this.conferenceHubService.usersInRoom.forEach((user: any) => {
-      const call = this.peer.call(user, this.stream, {
-        metadata: { userId: this.userService.user },
-      });
-      call.on('stream', (otherUserVideoStream: MediaStream) => {
-        this.addOtherUserVideo(otherUserVideoStream, user);
-      });
+      setTimeout(() => {
+        const call = this.peer.call(user, this.stream, {
+          metadata: { userId: this.userService.user },
+        });
+        call.on('stream', (otherUserVideoStream: MediaStream) => {
+          this.addOtherUserVideo(otherUserVideoStream, user);
+        });
+      }, 1000);
     });
   }
 
@@ -104,10 +108,19 @@ export class RoomComponent implements OnInit {
   }
 
   async createLocalStream() {
-    this.stream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true,
-    });
+    if (this.webcamId == null || this.webcamId == '')
+    {
+      this.stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true
+      });
+    } else {
+      this.stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          deviceId: { exact: this.webcamId }
+        }
+      });
+    }
     this.localvideoPlayer.nativeElement.srcObject = this.stream;
     this.localvideoPlayer.nativeElement.load();
     this.localvideoPlayer.nativeElement.play();
