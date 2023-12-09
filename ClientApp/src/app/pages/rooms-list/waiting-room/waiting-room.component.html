@@ -8,54 +8,83 @@
   <div class="room-name-header">
     You are about to join <span class="room-name">{{ room.roomName }}.</span>
   </div>
-  <div class="room-details">
-    <div class="card">
-      <h2 class="room-details-header">ROOM DETAILS</h2>
-      <div class="detail-data">
-        <div class="detail">
-          Enabled chat:
-          <span>
-            <i
-              *ngIf="room.enableChat"
-              class="enabled-icon fa-solid fa-comment"
-            ></i>
-            <i
-              *ngIf="!room.enableChat"
-              class="disabled-icon fa-solid fa-comment-slash"
-            ></i>
-          </span>
+  <div class="col-12 content">
+    <div class="col-6 room-details">
+      <div class="card">
+        <h2 class="room-details-header">ROOM DETAILS</h2>
+        <div class="detail-data">
+          <div class="detail">
+            Enabled chat:
+            <span>
+              <i
+                *ngIf="room.enableChat"
+                class="enabled-icon fa-solid fa-comment"
+              ></i>
+              <i
+                *ngIf="!room.enableChat"
+                class="disabled-icon fa-solid fa-comment-slash"
+              ></i>
+            </span>
+          </div>
+          <div class="detail">
+            Enabled video:
+            <span>
+              <i
+                *ngIf="room.enableVideo"
+                class="enabled-icon fa-solid fa-video"
+              ></i>
+              <i
+                *ngIf="!room.enableVideo"
+                class="disabled-icon fa-solid fa-video-slash"
+              ></i>
+            </span>
+          </div>
+          <div class="detail">
+            Max. participants: <span>{{ room.participants }}</span>
+          </div>
+          <div class="detail">
+            Password access:
+            <span>
+              <i
+                *ngIf="room.hasPassword"
+                class="enabled-icon fa-solid fa-check"
+              ></i>
+              <i
+                *ngIf="!room.hasPassword"
+                class="disabled-icon fa-solid fa-xmark"
+              ></i>
+            </span>
+          </div>
+          <div class="detail">
+            Currently in room: <span>{{ room.count }}</span>
+          </div>
         </div>
-        <div class="detail">
-          Enabled video:
-          <span>
-            <i
-              *ngIf="room.enableVideo"
-              class="enabled-icon fa-solid fa-video"
-            ></i>
-            <i
-              *ngIf="!room.enableVideo"
-              class="disabled-icon fa-solid fa-video-slash"
-            ></i>
-          </span>
+      </div>
+    </div>
+    <div
+      class="col-4"
+      style="display: flex; justify-content: flex-start; align-items: center"
+    >
+      <div>
+        <div style="display: flex; justify-content: center;">
+          <button
+            pButton
+            pRipple
+            class="p-button p-button-warning mb-2"
+            (click)="showWebcam = !showWebcam"
+          >
+            <i class="fa-solid fa-gear" style="margin-right: 10px"></i>
+            <span *ngIf="!showWebcam">CHECK WEBCAM</span>
+            <span *ngIf="showWebcam">HIDE WEBCAM</span>
+          </button>
         </div>
-        <div class="detail">
-          Max. participants: <span>{{ room.participants }}</span>
-        </div>
-        <div class="detail">
-          Password access:
-          <span>
-            <i
-              *ngIf="room.hasPassword"
-              class="enabled-icon fa-solid fa-check"
-            ></i>
-            <i
-              *ngIf="!room.hasPassword"
-              class="disabled-icon fa-solid fa-xmark"
-            ></i>
-          </span>
-        </div>
-        <div class="detail">
-          Currently in room: <span>{{ room.count }}</span>
+        <div class="wrapper">
+          <webcam
+            *ngIf="showWebcam"
+            [height]="280"
+            [width]="280"
+            [imageQuality]="1"
+          ></webcam>
         </div>
       </div>
     </div>

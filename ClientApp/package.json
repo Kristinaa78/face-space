@@ -25,6 +25,7 @@
     "font-awesome": "^4.7.0",
     "ng-bootstrap": "^1.6.3",
     "ngx-bootstrap": "^11.0.2",
+    "ngx-webcam": "^0.4.1",
     "peerjs": "^1.5.1",
     "primeicons": "^6.0.1",
     "primeng": "^16.0.2",

@@ -36,6 +36,10 @@ import { ChipModule } from 'primeng/chip';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CheckboxModule } from 'primeng/checkbox';
 
+// other
+import {WebcamModule} from 'ngx-webcam';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +55,7 @@ import { CheckboxModule } from 'primeng/checkbox';
   imports: [
     RouterModule.forRoot(AppRoutingModule),
     BrowserAnimationsModule,
+    WebcamModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,

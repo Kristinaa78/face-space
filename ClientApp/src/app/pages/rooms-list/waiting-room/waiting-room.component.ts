@@ -17,6 +17,7 @@ export class WaitingRoomComponent implements OnInit {
   roomId: number = 0;
   room!: Room;
   ref: DynamicDialogRef | undefined;
+  showWebcam = false;
 
   constructor(
     private route: ActivatedRoute,
