@@ -1,0 +1,76 @@
+.room-name-header {
+  padding-top: 5%;
+  padding-bottom: 2%;
+  text-align: center;
+  font-family: "Konkhmer Sleokchher";
+  font-size: 38px;
+  color: rgba(229, 221, 238, 0.63);
+  font-weight: 400;
+}
+
+.room-name {
+  color: rgba(229, 221, 238, 0.874);
+}
+
+.room-details {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  flex-direction: column;
+  align-content: center;
+  flex-wrap: wrap;
+  padding-top: 2%;
+}
+
+.room-details-header {
+  color: rgb(153, 177, 202);
+  font-weight: 700;
+  text-align: center;
+  font-size: 20px;
+  padding: 2%;
+  margin-bottom: 0px;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  color: rgb(129, 147, 167);
+  font-weight: 600;
+  font-size: 16px;
+  padding: 2px;
+}
+
+.card {
+  width: 300px;
+  background-color: rgb(60 61 64);
+  border-color: rgba(60, 61, 64, 0.79);
+}
+
+.detail-data {
+  padding: 2%;
+  text-transform: uppercase;
+}
+
+.enabled-icon {
+  color: rgb(173 255 189);
+}
+
+.disabled-icon {
+  color: rgb(227 86 170);
+}
+
+.lock-icon {
+  color: rgb(216, 216, 216);
+}
+
+.buttons {
+    margin-top: 5%;
+}
+
+.control-button {
+  font-weight: 600;
+  width: 150px;
+  display: flex;
+  justify-content: center !important;
+}

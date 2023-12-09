@@ -54,9 +54,7 @@ export class RoomSettingsComponent implements OnInit {
   }
 
   createRoom() {
-    console.log(this.roomSettingsForm.value);
     this.roomService.createRoom(this.roomSettingsForm.value).subscribe((x) => {
-      //this.reloadRooms();
       this.dynamicRef.close();
     });
   }

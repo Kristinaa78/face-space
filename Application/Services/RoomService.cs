@@ -1,5 +1,6 @@
 ﻿using face_space.Application.Dtos;
 using face_space.Application.Interfaces;
+using face_space.Exceptions;
 using face_space.Persistance.Interfaces;
 using face_space.Persistance.Model;
 using Microsoft.AspNetCore.Routing.Patterns;
@@ -57,9 +58,9 @@ namespace face_space.Application.Services
             }).ToList();
         }
 
-        public async Task<RoomDTO> GetRoomById(int Id)
+        public async Task<RoomDTO> GetRoomById(int id)
         {
-            Room room = await _roomRepository.GetRoomById(Id);
+            Room room = await _roomRepository.GetRoomById(id);
             return new RoomDTO
             {
                 Id = room.Id,
@@ -67,8 +68,16 @@ namespace face_space.Application.Services
                 Participants = room.Participants,
                 EnableChat = room.EnableChat,
                 EnableVideo = room.EnableVideo,
+                HasPassword = !string.IsNullOrEmpty(room.Password),
                 Count = room.Count,
             };
+        }
+        public async Task<bool> ValidateRoomPassword(int roomId, string password)
+        {
+            Room room = await _roomRepository.GetRoomById(roomId);
+            if (!room.Password.Equals(password))
+                throw new IncorrectRoomPasswordException();
+            return true;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace face_space.Application.Interfaces
         Task<RoomDTO> CreateRoom(RoomDTO room, string user);
         Task DeleteRoom(int roomId, string user);
         Task<List<RoomDTO>> GetRooms(string user);
-        public Task<RoomDTO> GetRoomById(int id);
+        Task<RoomDTO> GetRoomById(int id);
+        Task<bool> ValidateRoomPassword(int roomId, string password);
     }
 }

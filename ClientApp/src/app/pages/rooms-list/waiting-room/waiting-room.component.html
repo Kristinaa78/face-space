@@ -1,6 +1,86 @@
+<link
+  href="https://fonts.googleapis.com/css2?family=Konkhmer+Sleokchher&display=swap"
+  rel="stylesheet"
+/>
+
 <p-toast></p-toast>
 <div class="container-fluid col-12">
-  <div class="room-name">
-    You are about to join {{ room.roomName }}
+  <div class="room-name-header">
+    You are about to join <span class="room-name">{{ room.roomName }}.</span>
+  </div>
+  <div class="room-details">
+    <div class="card">
+      <h2 class="room-details-header">ROOM DETAILS</h2>
+      <div class="detail-data">
+        <div class="detail">
+          Enabled chat:
+          <span>
+            <i
+              *ngIf="room.enableChat"
+              class="enabled-icon fa-solid fa-comment"
+            ></i>
+            <i
+              *ngIf="!room.enableChat"
+              class="disabled-icon fa-solid fa-comment-slash"
+            ></i>
+          </span>
+        </div>
+        <div class="detail">
+          Enabled video:
+          <span>
+            <i
+              *ngIf="room.enableVideo"
+              class="enabled-icon fa-solid fa-video"
+            ></i>
+            <i
+              *ngIf="!room.enableVideo"
+              class="disabled-icon fa-solid fa-video-slash"
+            ></i>
+          </span>
+        </div>
+        <div class="detail">
+          Max. participants: <span>{{ room.participants }}</span>
+        </div>
+        <div class="detail">
+          Password access:
+          <span>
+            <i
+              *ngIf="room.hasPassword"
+              class="enabled-icon fa-solid fa-check"
+            ></i>
+            <i
+              *ngIf="!room.hasPassword"
+              class="disabled-icon fa-solid fa-xmark"
+            ></i>
+          </span>
+        </div>
+        <div class="detail">
+          Currently in room: <span>{{ room.count }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="buttons d-flex justify-content-center">
+    <div class="col-3 d-flex justify-content-between">
+      <button
+        pButton
+        pRipple
+        [routerLinkActive]="['link-active']"
+        [routerLink]="['/rooms-list']"
+        class="p-button p-button-text p-button-warning control-button"
+      >
+        GO BACK
+      </button>
+      <button
+        pButton
+        pRipple
+        class="p-button p-button-success control-button"
+        (click)="joinRoom()"
+      >
+        <i class="fa-solid fa-phone" style="margin-right: 10px"></i>
+        JOIN ROOM
+      </button>
+    </div>
   </div>
 </div>

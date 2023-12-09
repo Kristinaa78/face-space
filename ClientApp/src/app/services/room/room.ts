@@ -5,6 +5,7 @@ export interface Room {
   enableChat: boolean;
   enableVideo: boolean;
   count: number;
+  hasPassword: boolean;
 }
 
 export interface RoomSettings {

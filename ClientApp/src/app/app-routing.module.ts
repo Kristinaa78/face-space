@@ -8,6 +8,11 @@ import { RoomResolver } from './resolvers/room.resolver';
 
 export const AppRoutingModule: Routes = [
   {
+    path: '',
+    component: WelcomeComponent,
+    resolve: {},
+  },
+  {
     path: 'login',
     component: LoginComponent,
     resolve: {},
@@ -28,10 +33,5 @@ export const AppRoutingModule: Routes = [
     resolve: {
       resolvedData: RoomResolver,
     },
-  },
-  {
-    path: '',
-    component: WelcomeComponent,
-    resolve: {},
   },
 ];

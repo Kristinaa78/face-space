@@ -79,9 +79,26 @@ namespace face_space.Controllers
             }
             catch (Exception ex)
             {
-
                 if (ex is RoomNotFoundException)
                     return StatusCode((int)HttpStatusCode.NotFound, ex.Message);
+                else
+                    return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPut("validate-password/{roomId}")]
+        public async Task<IActionResult> ValidateRoomPassword([FromRoute] int roomId, [FromBody] string[] password)
+        {
+            try
+            {
+                return Ok(await _service.ValidateRoomPassword(roomId, password[0]));
+            }
+            catch (Exception ex)
+            {
+                if (ex is RoomNotFoundException)
+                    return StatusCode((int)HttpStatusCode.NotFound, ex.Message);
+                else if (ex is IncorrectRoomPasswordException)
+                    return StatusCode((int)HttpStatusCode.Unauthorized, ex.Message);
                 else
                     return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
