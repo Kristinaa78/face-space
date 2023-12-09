@@ -3,23 +3,25 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import Peer from 'peerjs';
 import { ConferenceHubService } from 'src/app/services/conference/conference-hub.service';
+import { Room } from 'src/app/services/room/room';
+import { RoomService } from 'src/app/services/room/room.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 type Video = {
-  stream: MediaStream,
-  user: string,
+  stream: MediaStream;
+  user: string;
 };
 
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
-  styleUrls: ['./room.component.scss']
+  styleUrls: ['./room.component.scss'],
 })
 export class RoomComponent implements OnInit {
-
-  public newMessage = "";
+  public newMessage = '';
   public recording = false;
   public screenSharing = false;
+  room!: Room;
 
   @ViewChild('videoPlayer') localvideoPlayer!: ElementRef;
   stream: any;
@@ -30,26 +32,31 @@ export class RoomComponent implements OnInit {
   sharingTo: any[] = [];
   mediaRecorder: MediaRecorder | null = null;
   recordedBlobs: any[] = [];
-  recordingName: string = "";
+  recordingName: string = '';
   enableVideo = true;
- 
-
 
   password!: string;
   id!: string;
-  
-  constructor(public conferenceHubService: ConferenceHubService,
-              private userService: UserService,
-              private route: ActivatedRoute) { }
+
+  constructor(
+    public conferenceHubService: ConferenceHubService,
+    private roomService: RoomService,
+    private userService: UserService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.joinRoom();
+    this.id = this.route.snapshot.params['id'];
+    this.password = this.route.snapshot.queryParams['password'];
+
+    this.roomService.getRoomById(Number(this.id)).subscribe((x) => {
+      this.room = x;
+
+      this.joinRoom();
+    });
   }
 
   joinRoom() {
-    this.id = this.route.snapshot.params['id'];
-    this.password = this.route.snapshot.queryParams['password'];
-    
     this.conferenceHubService.createHubConnection(this.id, this.password);
     this.createLocalStream();
 
@@ -92,11 +99,14 @@ export class RoomComponent implements OnInit {
 
   public sendMessage() {
     this.conferenceHubService.sendMessage(this.newMessage);
-    this.newMessage = "";
+    this.newMessage = '';
   }
 
   async createLocalStream() {
-    this.stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    this.stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
     this.localvideoPlayer.nativeElement.srcObject = this.stream;
     this.localvideoPlayer.nativeElement.load();
     this.localvideoPlayer.nativeElement.play();
@@ -109,13 +119,15 @@ export class RoomComponent implements OnInit {
 
     this.recordedBlobs = [];
 
-    this.recordingName = 'faceSPACE_' + formatDate(new Date(), 'yyyyMMddhhmmss', 'en-US');
+    this.recordingName =
+      'faceSPACE_' + formatDate(new Date(), 'yyyyMMddhhmmss', 'en-US');
 
-    let options = { mimeType: 'video/webm'};
+    let options = { mimeType: 'video/webm' };
     this.mediaRecorder = new MediaRecorder(this.stream, options);
 
     // these lambdas are used on purpose so that `this` refers to RoomComponent in the functions
-    this.mediaRecorder.ondataavailable = event => this.onRecorderDataAvailable(event);
+    this.mediaRecorder.ondataavailable = (event) =>
+      this.onRecorderDataAvailable(event);
     this.mediaRecorder.onstop = () => {
       this.storeRecording();
 
@@ -144,7 +156,7 @@ export class RoomComponent implements OnInit {
     let options = {
       audio: {
         echoCancellation: true,
-        noiseSuppression: true
+        noiseSuppression: true,
       },
       video: true,
     };
@@ -153,13 +165,13 @@ export class RoomComponent implements OnInit {
     this.shareScreenStream = mediaStream;
 
     this.sharingTo = [];
-    this.videos.forEach(v => {
+    this.videos.forEach((v) => {
       const call = this.shareScreenPeer.call('screen_' + v.user, mediaStream);
       this.sharingTo.push(call);
     });
 
     mediaStream.getVideoTracks()[0].addEventListener('ended', () => {
-      this.sharingTo.forEach(v => v.close());
+      this.sharingTo.forEach((v) => v.close());
       this.sharingStopped();
     });
 
@@ -173,12 +185,12 @@ export class RoomComponent implements OnInit {
   }
 
   storeRecording() {
-    let options = { type: 'video/webm'};
+    let options = { type: 'video/webm' };
     let blob = new Blob(this.recordedBlobs, options);
 
     let link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = this.recordingName + ".webm";
+    link.download = this.recordingName + '.webm';
     link.click();
     link.remove();
   }
@@ -192,8 +204,8 @@ export class RoomComponent implements OnInit {
   }
 
   addOtherUserVideo(stream: MediaStream, user: string) {
-    if (!this.videos.map(x => x.user).includes(user)) {
-      this.videos.push({stream, user});
+    if (!this.videos.map((x) => x.user).includes(user)) {
+      this.videos.push({ stream, user });
     }
   }
 
@@ -202,7 +214,7 @@ export class RoomComponent implements OnInit {
   }
 
   muteVideo() {
-    this.enableVideo = !this.enableVideo
+    this.enableVideo = !this.enableVideo;
     if (this.stream.getVideoTracks()[0]) {
       this.stream.getVideoTracks()[0].enabled = this.enableVideo;
     }

@@ -1,0 +1,23 @@
+.chat {
+    background-color: rgb(169 190 217);
+}
+
+.webcam-grid {
+    background-color: #212222cf;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    height: 87vh !important;
+    margin-top: 1% !important;
+}
+
+.chat-header {
+    background-color: rgb(216, 230, 249);
+    width: fit-content;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 17px;
+    color: rgb(89, 116, 204);
+}

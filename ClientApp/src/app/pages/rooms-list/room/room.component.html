@@ -1,24 +1,62 @@
-<div class="container-fluid col-12">
-
-
-  <!-- <input type="text" [(ngModel)]="password"> -->
-  <!-- <button (click)="joinRoom()">Join</button> -->
-  <p *ngFor="let i of conferenceHubService.messages">{{i.senderUsername}}: {{i.content}}</p>
-  <input type="text" [(ngModel)]="newMessage">
-  <button (click)="sendMessage()">Send</button>
-  <button (click)="callThem()">Join/Connect to other users</button>
-  <button (click)="shareScreen()">Share screen</button>
-  <button (click)="startRecording()" [hidden]="recording">🔴 Start recording</button>
-  <button (click)="stopRecording()" [hidden]="!recording">🔲 Stop recording</button>
-  <button (click)="muteVideo()">muteVideo</button>
-  <br>
-  <video #videoPlayer width="100%" height="170" controls></video>
-  <div *ngFor="let video of videos">
-    <video  width="100%" height="150" [srcObject]="video.stream" (loadedmetadata)="onLoadedMetadata($event)">
-    </video>
+<div class="container col-12 d-flex flex-row">
+  <div class="col-9 webcam-grid">
+    <div class="room-header d-flex justify-content-center">
+      <h5>{{ room?.roomName }}</h5>
+    </div>
+    <button (click)="callThem()">Join/Connect to other users</button>
+    <button (click)="shareScreen()">Share screen</button>
+    <button (click)="startRecording()" [hidden]="recording">
+      🔴 Start recording
+    </button>
+    <button (click)="stopRecording()" [hidden]="!recording">
+      🔲 Stop recording
+    </button>
+    <button (click)="muteVideo()">muteVideo</button>
+    <br />
+    <video #videoPlayer width="100%" height="170" controls></video>
+    <div *ngFor="let video of videos">
+      <video
+        width="100%"
+        height="150"
+        [srcObject]="video.stream"
+        (loadedmetadata)="onLoadedMetadata($event)"
+      ></video>
+    </div>
+    <div style="position: relative" [hidden]="!screenSharing">
+      <video
+        [srcObject]="shareScreenStream"
+        (loadedmetadata)="onLoadedMetadata($event)"
+        muted
+      ></video>
+    </div>
   </div>
-  <div style="position: relative;" [hidden]="!screenSharing">
-    <video [srcObject]="shareScreenStream" (loadedmetadata)="onLoadedMetadata($event)" muted></video>
-  </div>
 
+  <div class="col-3 chat">
+    <div>
+      <div class="chat-header d-flex justify-content-center">
+        <h5>ROOM CHAT</h5>
+      </div>
+
+      <div class="chat-content">
+        <div
+          class="chat-message"
+          *ngFor="let i of conferenceHubService.messages"
+        >
+          <span class="sender"> {{ i.senderUsername }}: </span>
+          <span class="message-content">
+            {{ i.content }}
+          </span>
+
+          <span class="message-timestamp">
+            {{ i.messageSent }}
+          </span>
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <input type="text" [(ngModel)]="newMessage" />
+        <button (click)="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
 </div>

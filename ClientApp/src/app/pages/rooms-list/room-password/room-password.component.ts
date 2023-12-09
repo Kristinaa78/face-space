@@ -32,7 +32,10 @@ export class RoomPasswordComponent implements OnInit {
       .subscribe({
         next: (x) => {
           this.dynamicRef.close();
-          this.router.navigate(['/room/' + this.roomId + '?password=' + this.password]);
+          this.router.navigate([
+            '/room/' + this.roomId],
+            { queryParams: { password: this.password } },
+          );
         },
         error: (err: HttpErrorResponse) => {
           this.messageService.add({
