@@ -36,14 +36,15 @@ namespace face_space.Persistance.Repositories
 
             await _context.SaveChangesAsync();
 
-            foreach (var invite in room.InvitedUsers)
-            {
-                _context.Invites.Add(new Invite 
-                { 
-                    UserId = _context.Users.First(x => x.Username.Equals(invite.Username)).Id,
-                    RoomId = res.Entity.Id
-                });
-            }
+            if (room.InvitedUsers != null)
+                foreach (var invite in room.InvitedUsers)
+                {
+                    _context.Invites.Add(new Invite 
+                    { 
+                        UserId = _context.Users.First(x => x.Username.Equals(invite.Username)).Id,
+                        RoomId = res.Entity.Id
+                    });
+                }
 
             await _context.SaveChangesAsync();
 

@@ -13,12 +13,11 @@ type Video = {
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
-  styleUrls: ['./room.component.css']
+  styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
 
   public newMessage = "";
-
   public recording = false;
   public screenSharing = false;
 
@@ -33,19 +32,25 @@ export class RoomComponent implements OnInit {
   recordedBlobs: any[] = [];
   recordingName: string = "";
   enableVideo = true;
-  password = "";
+ 
+
+
+  password!: string;
+  id!: string;
   
   constructor(public conferenceHubService: ConferenceHubService,
               private userService: UserService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-
+    this.joinRoom();
   }
 
-
-  public joinRoom() {
-    this.conferenceHubService.createHubConnection(this.route.snapshot.params['id'], this.password);
+  joinRoom() {
+    this.id = this.route.snapshot.params['id'];
+    this.password = this.route.snapshot.params['password'];
+    
+    this.conferenceHubService.createHubConnection(this.id, this.password);
     this.createLocalStream();
 
     this.peer = new Peer(this.userService.user);

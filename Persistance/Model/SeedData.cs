@@ -26,6 +26,15 @@ namespace face_space.Persistance.Model
                 Password = "minka",
             });
 
+            for (int i = 0; i < 10; i++)
+            {
+                await repository.CreateUser(new RegisterDTO
+                {
+                    Username = i.ToString(),
+                    Password = i.ToString(),
+                });
+            }
+  
             await roleRepository.CreateRole("Admin");
             await roleRepository.CreateRole("User");
         }
