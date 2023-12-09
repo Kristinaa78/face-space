@@ -44,7 +44,11 @@
   font-weight: 500;
 }
 
-  
+.message-content {
+  font-size: 14px;
+  padding: 2px;
+}
+
 #chat::-webkit-scrollbar {
   width: 10px;
 }
@@ -57,5 +61,27 @@
 
 #chat::-webkit-scrollbar-thumb {
   border-radius: 8px;
-  background-color: rgb(152, 181, 214)
+  background-color: rgb(152, 181, 214);
+}
+
+.button-group {
+  background-color: rgb(19 19 19);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6% !important;
+}
+
+.webcam-grid {
+  max-width: 100%;
+  height: 94% !important;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  overflow: scroll;
+}
+
+.video-item {
+  // width: 75%;
+  // height: auto;
 }

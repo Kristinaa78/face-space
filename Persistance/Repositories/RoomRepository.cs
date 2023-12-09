@@ -46,6 +46,12 @@ namespace face_space.Persistance.Repositories
                     });
                 }
 
+            _context.Invites.Add(new Invite
+            {
+                UserId = user.Id,
+                RoomId = res.Entity.Id
+            });
+
             await _context.SaveChangesAsync();
 
             return res.Entity;
