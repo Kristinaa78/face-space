@@ -65,6 +65,7 @@ namespace face_space.Application.Services
                 Participants = room.Participants,
                 EnableChat = room.EnableChat,
                 EnableVideo = room.EnableVideo,
+                HasPassword = !string.IsNullOrEmpty(room.Password),
                 Count = room.Count,
             };
         }
