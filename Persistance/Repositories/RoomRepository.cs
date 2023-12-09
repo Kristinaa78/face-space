@@ -35,6 +35,18 @@ namespace face_space.Persistance.Repositories
             });
 
             await _context.SaveChangesAsync();
+
+            foreach (var invite in room.InvitedUsers)
+            {
+                _context.Invites.Add(new Invite 
+                { 
+                    UserId = _context.Users.First(x => x.Username.Equals(invite.Username)).Id,
+                    RoomId = res.Entity.Id
+                });
+            }
+
+            await _context.SaveChangesAsync();
+
             return res.Entity;
         }
 
@@ -51,7 +63,10 @@ namespace face_space.Persistance.Repositories
 
         public async Task<List<Room>> GetRooms(string user)
         {
-            return await _context.Rooms.ToListAsync();
+            return await _context.Rooms
+                .Include(x => x.Invites)
+                .ThenInclude(x => x.User)
+                .ToListAsync();
         }
 
         public async Task<Room> GetRoomById(int id)
@@ -65,7 +80,9 @@ namespace face_space.Persistance.Repositories
         public async Task JoinRoom(int roomId, string username, string connectionId, string password)
         {
             var user = _context.Users.First(x => x.Username.Equals(username));
-            if (!(_context.Rooms.First(x => x.Id == roomId).AdminId == user.Id || _context.Rooms.First(x => x.Id == roomId).Password.Equals(password)))
+            if (!(_context.Rooms.First(x => x.Id == roomId).AdminId == user.Id ||
+                  _context.Invites.Any(x => x.RoomId == roomId && x.UserId == user.Id) ||
+                  _context.Rooms.First(x => x.Id == roomId).Password.Equals(password)))
                 throw new System.Exception("Bad password!");
 
             _context.Connections.Add(new Connection

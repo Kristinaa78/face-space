@@ -19,6 +19,7 @@ namespace face_space.Persistance.Model
         public virtual DbSet<Connection> Connections { get; set; }
         public virtual DbSet<Recording> Recordings { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<Invite> Invites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,16 +43,27 @@ namespace face_space.Persistance.Model
                 .HasForeignKey(ur => ur.AdminId)
                 .IsRequired();
 
+            builder.Entity<User>()
+                .HasMany(ur => ur.Invites)
+                .WithOne(u => u.User)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
+
             builder.Entity<Role>()
-              .HasMany(ur => ur.UserRoles)
-              .WithOne(u => u.Role)
-              .HasForeignKey(ur => ur.RoleId)
-              .IsRequired();
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
 
             builder.Entity<Room>()
-            .HasMany(s => s.Connections)
-            .WithOne(c => c.Room)
-            .HasForeignKey(s => s.RoomId);
+                .HasMany(s => s.Invites)
+                .WithOne(c => c.Room)
+                .HasForeignKey(s => s.RoomId);
+
+            builder.Entity<Room>()
+                .HasMany(s => s.Connections)
+                .WithOne(c => c.Room)
+                .HasForeignKey(s => s.RoomId);
         }
     }
 }

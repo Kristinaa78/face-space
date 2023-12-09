@@ -2,6 +2,7 @@
 using face_space.Application.Interfaces;
 using face_space.Persistance.Interfaces;
 using face_space.Persistance.Model;
+using Microsoft.AspNetCore.Routing.Patterns;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
@@ -52,6 +53,7 @@ namespace face_space.Application.Services
                 Participants = room.Participants,
                 EnableChat = room.EnableChat,
                 EnableVideo = room.EnableVideo,
+                Invited = room.Invites.Any(x => x.User.Username.Equals(user)),
             }).ToList();
         }
 

@@ -11,6 +11,7 @@ namespace face_space.Persistance.Model
         public DateTime createdAt { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Room> Rooms { get; set; }
+        public ICollection<Invite> Invites { get; set; }
         public ICollection<Recording> Recordings { get; set; }
     }
 }
