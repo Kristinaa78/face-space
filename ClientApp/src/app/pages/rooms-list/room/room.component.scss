@@ -1,23 +1,61 @@
 .chat {
-    background-color: rgb(169 190 217);
+  background-color: rgb(194 205 218);
 }
 
 .webcam-grid {
-    background-color: #212222cf;
+  background-color: #212222cf;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    height: 87vh !important;
-    margin-top: 1% !important;
+  display: flex;
+  justify-content: center;
+  height: 87vh !important;
+  margin-top: 1% !important;
 }
 
 .chat-header {
-    background-color: rgb(216, 230, 249);
-    width: fit-content;
-    border-radius: 8px;
-    padding: 8px;
-    margin: 17px;
-    color: rgb(89, 116, 204);
+  background-color: #ffffff66;
+  width: fit-content;
+  border-radius: 8px;
+  padding: 8px;
+  padding-bottom: 3px;
+  margin: 17px;
+  margin-bottom: 0px;
+  color: rgb(37, 37, 39);
+}
+
+.chat-content {
+  padding: 20px;
+  height: 77vh !important;
+  overflow-y: scroll !important;
+}
+
+.chat-message {
+  background-color: #ffffff66;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.message-header {
+  font-size: 12px;
+  color: rgb(60, 60, 61);
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+  font-weight: 500;
+}
+
+  
+#chat::-webkit-scrollbar {
+  width: 10px;
+}
+
+#chat::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: #e7e7e7;
+  border: 1px solid #cacaca;
+}
+
+#chat::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: rgb(152, 181, 214)
 }
