@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace face_space.Application.Dtos
 {
@@ -13,6 +14,7 @@ namespace face_space.Application.Dtos
         public bool EnableChat { get; set; }
         public bool Invited { get; set; }
         public int Count { get; set; }
+        public List<UserDTO> InvitedUsers {  get; set; } 
     }
 }
 

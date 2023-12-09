@@ -20,5 +20,6 @@ namespace face_space.Persistance.Model
 
         public User User { get; set; }
         public ICollection<Connection> Connections { get; set; }
+        public ICollection<Invite> Invites { get; set; }
     }
 }
