@@ -1,5 +1,11 @@
 import { formatDate } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import Peer from 'peerjs';
 import { ConferenceHubService } from 'src/app/services/conference/conference-hub.service';
@@ -29,6 +35,7 @@ export class RoomComponent implements OnInit {
   peer: any;
   shareScreenPeer: any;
   videos: Video[] = [];
+
   sharingTo: any[] = [];
   mediaRecorder: MediaRecorder | null = null;
   recordedBlobs: any[] = [];
@@ -37,6 +44,8 @@ export class RoomComponent implements OnInit {
 
   password!: string;
   id!: string;
+
+  size: number = 600; // basic size
 
   constructor(
     public conferenceHubService: ConferenceHubService,
@@ -53,6 +62,8 @@ export class RoomComponent implements OnInit {
       this.room = x;
 
       this.joinRoom();
+      this.innerWidth = window.innerWidth;
+      this.calculateVideoSize();
     });
   }
 
@@ -97,7 +108,65 @@ export class RoomComponent implements OnInit {
     });
   }
 
+  public innerWidth: any;
+
+  @ViewChild('webcamGrid') webcamGrid: any;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.innerWidth = window.innerWidth;
+    this.calculateVideoSize();
+  }
+
+  videosNum: number = 5;
+  public calculateVideoSize() {
+    switch (this.videosNum) {
+      case 1: {
+        this.size = this.innerWidth / 2;
+        break;
+      }
+      case 2: {
+        this.size = this.innerWidth / 3.8;
+        break;
+      }
+      case 3: {
+        this.size = this.innerWidth / 5.6;
+        break;
+      }
+      case 4: {
+        this.size = this.innerWidth / 5.6;
+        break;
+      }
+      case 5: {
+        this.size = this.innerWidth / 5.6;
+        break;
+      }
+      case 6: {
+        this.size = this.innerWidth / 5.6;
+        break;
+      }
+      case 7: {
+        this.size = this.innerWidth /  6.1;
+        break;
+      }
+      case 8: {
+        this.size = this.innerWidth / 6.1;
+        break;
+      }
+      case 9: {
+        this.size = this.innerWidth / 6.1;
+        break;
+      }
+      default: {
+        this.size = 300;
+        break;
+      }
+    }
+  }
+
   public sendMessage() {
+    this.calculateVideoSize();
+
     this.conferenceHubService.sendMessage(this.newMessage);
     this.newMessage = '';
   }
