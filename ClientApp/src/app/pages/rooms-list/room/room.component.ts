@@ -119,9 +119,8 @@ export class RoomComponent implements OnInit {
     this.calculateVideoSize();
   }
 
-  videosNum: number = 5;
   public calculateVideoSize() {
-    switch (this.videosNum) {
+    switch (this.videos.length + 1) {
       case 1: {
         this.size = this.innerWidth / 2;
         break;
@@ -166,8 +165,6 @@ export class RoomComponent implements OnInit {
   }
 
   public sendMessage() {
-    this.calculateVideoSize();
-
     this.conferenceHubService.sendMessage(this.newMessage);
     this.newMessage = '';
   }
@@ -274,6 +271,7 @@ export class RoomComponent implements OnInit {
   }
 
   addOtherUserVideo(stream: MediaStream, user: string) {
+    this.calculateVideoSize();
     if (!this.videos.map((x) => x.user).includes(user)) {
       this.videos.push({ stream, user });
     }
