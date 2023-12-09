@@ -18,6 +18,8 @@ export class WaitingRoomComponent implements OnInit {
   room!: Room;
   ref: DynamicDialogRef | undefined;
   showWebcam = false;
+  webcamId = "";
+  webcams!: any[];
 
   constructor(
     private route: ActivatedRoute,
@@ -29,14 +31,20 @@ export class WaitingRoomComponent implements OnInit {
     this.route.data.subscribe((data) => {
       this.room = data['resolvedData'];
     });
+    navigator.mediaDevices.enumerateDevices().then(x => {
+      console.log(x);
+      this.webcams = x.filter(x => x.kind.endsWith("videoinput"));
+    });
   }
 
   joinRoom() {
+    console.log(this.webcamId);
     if (this.room.hasPassword) {
       this.ref = this.dialogService.open(RoomPasswordComponent, {
         header: 'Room password',
         data: {
           roomId: this.room.id,
+          webcamId: this.webcamId
         },
         width: '400px',
         contentStyle: { overflow: 'auto' },
