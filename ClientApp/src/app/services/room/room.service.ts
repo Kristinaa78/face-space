@@ -23,4 +23,14 @@ export class RoomService {
   public getRoomById(id: number): Observable<Room> {
     return this.httpClient.get<Room>('api/room/' + id);
   }
+
+  public validateRoomPassword(
+    roomId: number,
+    password: string
+  ): Observable<any> {
+    return this.httpClient.put<any>(
+      'api/room/validate-password/' + roomId,
+      [password]
+    );
+  }
 }

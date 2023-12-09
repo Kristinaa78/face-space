@@ -19,6 +19,7 @@ import { RoomComponent } from './pages/rooms-list/room/room.component';
 import { RoomsListComponent } from './pages/rooms-list/rooms-list.component';
 import { RoomSettingsComponent } from './pages/rooms-list/room-settings/room-settings.component';
 import { WaitingRoomComponent } from './pages/rooms-list/waiting-room/waiting-room.component';
+import { RoomPasswordComponent } from './pages/rooms-list/room-password/room-password.component';
 
 // app-services
 import { UserService } from './services/user/user.service';
@@ -45,6 +46,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     RoomsListComponent,
     RoomSettingsComponent,
     WaitingRoomComponent,
+    RoomPasswordComponent,
   ],
   imports: [
     RouterModule.forRoot(AppRoutingModule),

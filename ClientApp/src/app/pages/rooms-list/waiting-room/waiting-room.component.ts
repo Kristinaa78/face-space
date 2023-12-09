@@ -1,24 +1,49 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Room } from 'src/app/services/room/room';
 import { RoomService } from 'src/app/services/room/room.service';
+import { RoomPasswordComponent } from '../room-password/room-password.component';
 
 @Component({
   selector: 'app-waiting-room',
   templateUrl: './waiting-room.component.html',
   styleUrls: ['./waiting-room.component.scss'],
+  providers: [DialogService],
 })
 export class WaitingRoomComponent implements OnInit {
   roomId: number = 0;
   room!: Room;
-  
-  constructor(private route: ActivatedRoute) {}
+  ref: DynamicDialogRef | undefined;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialogService: DialogService
+  ) {}
 
   ngOnInit() {
     this.route.data.subscribe((data) => {
       this.room = data['resolvedData'];
     });
+  }
+
+  joinRoom() {
+    if (this.room.hasPassword) {
+      this.ref = this.dialogService.open(RoomPasswordComponent, {
+        header: 'Room password',
+        data: {
+          roomId: this.room.id,
+        },
+        width: '400px',
+        contentStyle: { overflow: 'auto' },
+        maximizable: false,
+        modal: true,
+      });
+    } else {
+      this.router.navigate(['/room/' + this.room.id]);
+    }
   }
 }
