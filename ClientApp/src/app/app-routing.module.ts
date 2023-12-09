@@ -18,7 +18,7 @@ export const AppRoutingModule: Routes = [
     resolve: {},
   },
   {
-    path: 'room/:id/:password',
+    path: 'room/:id',
     component: RoomComponent,
     resolve: {},
   },

@@ -48,7 +48,7 @@ export class RoomComponent implements OnInit {
 
   joinRoom() {
     this.id = this.route.snapshot.params['id'];
-    this.password = this.route.snapshot.params['password'];
+    this.password = this.route.snapshot.queryParams['password'];
     
     this.conferenceHubService.createHubConnection(this.id, this.password);
     this.createLocalStream();
