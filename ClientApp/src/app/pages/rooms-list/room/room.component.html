@@ -47,7 +47,22 @@
         screen
       </button>
 
-      <button (click)="muteAudio()">muteAudio</button>
+      <button
+        pButton
+        pRipple
+        style="border-radius: 0px"
+        class="p-button-info mx-0 my-0"
+        (click)="muteAudio()"
+      >
+      <span *ngIf="enableAudio">
+        <i class="fa-solid fa-microphone" style="margin-right: 10px"></i> Mute
+        microphone
+      </span>
+      <span *ngIf="!enableAudio">
+        <i class="fa-solid fa-microphone-slash" style="margin-right: 10px"></i> Turn on
+        microphone
+      </span>
+      </button>
 
       <button
         *ngIf="!recording"

@@ -62,7 +62,10 @@
         <div class="row d-flex flex-row mt-2">
           <p-checkbox
             formControlName="enableVideo"
+            appendTo="body"
             [binary]="true"
+            tooltipPosition="top" 
+            pTooltip="Muting video stream is not implemeted yet."
             label="Enable video"
             inputId="enableVideo"
           ></p-checkbox>

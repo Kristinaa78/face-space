@@ -43,7 +43,10 @@ export class RoomSettingsComponent implements OnInit {
         Validators.min(1),
         Validators.max(10),
       ]),
-      enableVideo: new FormControl(true, Validators.required),
+      enableVideo: new FormControl(
+        { value: true, disabled: true },
+        Validators.required
+      ),
       enableChat: new FormControl(true, Validators.required),
       invitedUsers: new FormControl(null),
     });
