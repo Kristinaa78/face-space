@@ -87,8 +87,10 @@ export class RoomComponent implements OnInit, OnDestroy {
         this.addOtherUserVideo(otherUserVideoStream, call.metadata.userId);
       });
       call.on('close', () => {
-        console.log("close in joinRoom");
-        this.videos = this.videos.filter((video) => video.user !== call.metadata.userId);
+        console.log('close in joinRoom');
+        this.videos = this.videos.filter(
+          (video) => video.user !== call.metadata.userId
+        );
       });
     });
 
@@ -122,7 +124,7 @@ export class RoomComponent implements OnInit, OnDestroy {
           this.addOtherUserVideo(otherUserVideoStream, user);
         });
         call.on('close', () => {
-          console.log("close in callThem");
+          console.log('close in callThem');
           this.videos = this.videos.filter((video) => video.user !== user);
         });
       }, 1000);
@@ -140,14 +142,9 @@ export class RoomComponent implements OnInit, OnDestroy {
   }
 
   public calculateVideoSize() {
-   
     let count = this.videos.length + 1;
-    if (this.screenSharing)
-      count += 1
+    if (this.screenSharing) count += 1;
 
-    this.newMessage= '' + count;
-    this.sendMessage();
-  
     switch (count) {
       case 1: {
         this.size = this.innerWidth / 2;
