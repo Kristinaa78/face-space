@@ -54,14 +54,17 @@
         class="p-button-info mx-0 my-0"
         (click)="muteAudio()"
       >
-      <span *ngIf="enableAudio">
-        <i class="fa-solid fa-microphone" style="margin-right: 10px"></i> Mute
-        microphone
-      </span>
-      <span *ngIf="!enableAudio">
-        <i class="fa-solid fa-microphone-slash" style="margin-right: 10px"></i> Turn on
-        microphone
-      </span>
+        <span *ngIf="enableAudio">
+          <i class="fa-solid fa-microphone" style="margin-right: 10px"></i> Mute
+          microphone
+        </span>
+        <span *ngIf="!enableAudio">
+          <i
+            class="fa-solid fa-microphone-slash"
+            style="margin-right: 10px"
+          ></i>
+          Turn on microphone
+        </span>
       </button>
 
       <button
@@ -99,8 +102,15 @@
         class="p-button-help mx-0 my-0"
         (click)="muteVideo()"
       >
-        <i class="fa-solid fa-video-slash" style="margin-right: 10px"></i> Turn
-        camera off
+        <span *ngIf="enableVideo">
+          <i class="fa-solid fa-video" style="margin-right: 10px"></i> Turn
+          camera off
+        </span>
+
+        <span *ngIf="!enableVideo">
+          <i class="fa-solid fa-video-slash" style="margin-right: 10px"></i>
+          Turn camera on
+        </span>
       </button>
     </div>
   </div>

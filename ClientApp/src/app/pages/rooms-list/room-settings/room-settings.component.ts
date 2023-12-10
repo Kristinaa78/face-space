@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -57,8 +58,23 @@ export class RoomSettingsComponent implements OnInit {
   }
 
   createRoom() {
-    this.roomService.createRoom(this.roomSettingsForm.value).subscribe((x) => {
-      this.dynamicRef.close();
+    this.roomSettingsForm.get('enableVideo')?.setValue(true);
+    this.roomService.createRoom(this.roomSettingsForm.value).subscribe({
+      next: (x) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Room was successfully created.',
+        });
+        this.dynamicRef.close();
+      },
+      error: (err: HttpErrorResponse) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.error,
+        });
+      },
     });
   }
 }
