@@ -77,6 +77,13 @@
   height: 94% !important;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 10px;
   overflow: scroll;
 }
+
+// .video-item {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }

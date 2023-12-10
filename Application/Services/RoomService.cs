@@ -49,6 +49,7 @@ namespace face_space.Application.Services
             return (await _roomRepository.GetRooms(user)).Select(room => new RoomDTO
             {
                 Id = room.Id,
+                Count = room.Count,
                 RoomName = room.RoomName,
                 RoomPassword = room.Password,
                 Participants = room.Participants,

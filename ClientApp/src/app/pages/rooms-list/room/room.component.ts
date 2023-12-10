@@ -124,7 +124,15 @@ export class RoomComponent implements OnInit {
   }
 
   public calculateVideoSize() {
-    switch (this.videos.length + 1) {
+   
+    let count = this.videos.length + 1;
+    if (this.screenSharing)
+      count += 1
+
+    this.newMessage= '' + count;
+    this.sendMessage();
+  
+    switch (count) {
       case 1: {
         this.size = this.innerWidth / 2;
         break;
@@ -150,7 +158,7 @@ export class RoomComponent implements OnInit {
         break;
       }
       case 7: {
-        this.size = this.innerWidth /  6.1;
+        this.size = this.innerWidth / 6.1;
         break;
       }
       case 8: {
@@ -174,17 +182,16 @@ export class RoomComponent implements OnInit {
   }
 
   async createLocalStream() {
-    if (this.webcamId == null || this.webcamId == '')
-    {
+    if (this.webcamId == null || this.webcamId == '') {
       this.stream = await navigator.mediaDevices.getUserMedia({
         video: true,
-        audio: true
+        audio: true,
       });
     } else {
       this.stream = await navigator.mediaDevices.getUserMedia({
         video: {
-          deviceId: { exact: this.webcamId }
-        }
+          deviceId: { exact: this.webcamId },
+        },
       });
     }
     this.localvideoPlayer.nativeElement.srcObject = this.stream;
@@ -277,10 +284,12 @@ export class RoomComponent implements OnInit {
 
   sharingStarted() {
     this.screenSharing = true;
+    this.calculateVideoSize();
   }
 
   sharingStopped() {
     this.screenSharing = false;
+    this.calculateVideoSize();
   }
 
   addOtherUserVideo(stream: MediaStream, user: string) {
