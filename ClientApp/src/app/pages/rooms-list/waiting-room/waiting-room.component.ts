@@ -44,7 +44,9 @@ export class WaitingRoomComponent implements OnInit {
         header: 'Room password',
         data: {
           roomId: this.room.id,
-          webcamId: this.webcamId
+          webcamId: this.webcamId,
+          defaultMuteVideo: this.room.enableVideo,
+          defaultMuteChat: this.room.enableChat
         },
         width: '400px',
         contentStyle: { overflow: 'auto' },

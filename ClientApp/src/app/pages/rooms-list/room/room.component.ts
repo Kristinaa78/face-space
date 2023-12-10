@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   HostListener,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -23,7 +24,7 @@ type Video = {
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnInit, OnDestroy {
   public newMessage = '';
   public recording = false;
   public screenSharing = false;
@@ -41,6 +42,7 @@ export class RoomComponent implements OnInit {
   recordedBlobs: any[] = [];
   recordingName: string = '';
   enableVideo = true;
+  enableChat!: boolean;
   enableAudio = true;
   webcamId!: string;
 
@@ -60,6 +62,8 @@ export class RoomComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.password = this.route.snapshot.queryParams['password'];
     this.webcamId = this.route.snapshot.queryParams['webcamId'];
+    //this.enableVideo = this.route.snapshot.queryParams['enableVideo'];
+    //this.enableChat = this.route.snapshot.queryParams['enableChat'];
 
     this.roomService.getRoomById(Number(this.id)).subscribe((x) => {
       this.room = x;
@@ -82,6 +86,10 @@ export class RoomComponent implements OnInit {
       call.on('stream', (otherUserVideoStream: MediaStream) => {
         this.addOtherUserVideo(otherUserVideoStream, call.metadata.userId);
       });
+      call.on('close', () => {
+        console.log("close in joinRoom");
+        this.videos = this.videos.filter((video) => video.user !== call.metadata.userId);
+      });
     });
 
     this.shareScreenPeer = new Peer('screen_' + this.userService.user);
@@ -96,6 +104,10 @@ export class RoomComponent implements OnInit {
 
       call.on('close', () => this.sharingStopped());
     });
+
+    setTimeout(() => {
+      this.callThem();
+    }, 2000);
   }
 
   public callThem() {
@@ -108,6 +120,10 @@ export class RoomComponent implements OnInit {
         });
         call.on('stream', (otherUserVideoStream: MediaStream) => {
           this.addOtherUserVideo(otherUserVideoStream, user);
+        });
+        call.on('close', () => {
+          console.log("close in callThem");
+          this.videos = this.videos.filter((video) => video.user !== user);
         });
       }, 1000);
     });
@@ -315,5 +331,11 @@ export class RoomComponent implements OnInit {
     if (this.stream.getAudioTracks()[0]) {
       this.stream.getAudioTracks()[0].enabled = this.enableAudio;
     }
+  }
+
+  ngOnDestroy() {
+    this.peer.disconnect();
+    this.shareScreenPeer.destroy();
+    this.conferenceHubService.stopHubConnection();
   }
 }
