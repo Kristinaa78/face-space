@@ -12,8 +12,8 @@ nvm use 16.18.0
 3. Clone repository and go to ClientApp directory
 
 ```bash
-git clone git@github.com:team-based/based-app.git
-cd based-app/ClientApp
+git clone git@github.com:Kristinaa78/face-space.git
+cd face-space/ClientApp
 ```
 4. Install dependencies with npm and try compiling the frontend: 
 ```
