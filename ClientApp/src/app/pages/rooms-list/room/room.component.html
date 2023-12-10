@@ -1,34 +1,36 @@
 <div class="container col-12 d-flex flex-row">
-
   <div class="col-9 video-content">
     <div #webcamGrid class="webcam-grid">
-      <video #videoPlayer [ngStyle]="{ 'width.px': size }" controls></video>
-      <!-- <video [srcObject]="stream" [ngStyle]="{'width.px': size }" controls></video>
-      <video [srcObject]="stream" [ngStyle]="{'width.px': size }" controls></video>
-      <video  [srcObject]="stream" [ngStyle]="{'width.px': size }" controls></video>
-      <video  [srcObject]="stream" [ngStyle]="{'width.px': size }" controls></video>
-      <video [srcObject]="stream" [ngStyle]="{'width.px': size }" controls></video>
-  -->
+      <video
+        #videoPlayer
+        class="video-item"
+        [ngStyle]="{ 'width.px': size }"
+        controls
+      ></video>
 
       <div *ngFor="let video of videos">
         <video
-          [ngStyle]="{'width.px': size }"
+          class="video-item"
+          [ngStyle]="{ 'width.px': size }"
           [srcObject]="video.stream"
           (loadedmetadata)="onLoadedMetadata($event)"
+          controls
         ></video>
       </div>
       <div style="position: relative" [hidden]="!screenSharing">
         <video
+          class="video-item"
           [srcObject]="shareScreenStream"
-          [ngStyle]="{'width.px': size }"
+          [ngStyle]="{ 'width.px': size }"
           (loadedmetadata)="onLoadedMetadata($event)"
+          controls
           muted
         ></video>
       </div>
     </div>
 
     <div class="button-group">
-      <!-- <button (click)="callThem()">Join/Connect to other users</button> -->
+      <button (click)="callThem()">Join/Connect to other users</button>
 
       <button
         pButton
@@ -46,7 +48,7 @@
       </button>
 
       <button (click)="muteAudio()">muteAudio</button>
-      
+
       <button
         *ngIf="!recording"
         pButton
@@ -88,7 +90,8 @@
     </div>
   </div>
 
-  <div *ngIf="enableChat"
+  <div
+    *ngIf="room?.enableChat"
     class="col-3 chat"
     style="display: flex; flex-direction: column; align-content: space-between"
   >

@@ -35,6 +35,8 @@ import { ButtonModule } from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 // other
@@ -70,7 +72,9 @@ import {WebcamModule} from 'ngx-webcam';
     ChipModule,
     CheckboxModule,
     ButtonModule,
-    MultiSelectModule
+    MultiSelectModule,
+    DropdownModule,
+    TooltipModule
   ],
   providers: [UserService, MessageService, DatePipe],
   bootstrap: [AppComponent],
