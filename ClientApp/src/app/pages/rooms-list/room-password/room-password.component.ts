@@ -14,6 +14,8 @@ export class RoomPasswordComponent implements OnInit {
   password: string = '';
   roomId: number = 0;
   webcamId: string = '';
+  defaultMuteVideo!: boolean;
+  defaultMuteChat!: boolean;
 
   constructor(
     private roomService: RoomService,
@@ -26,6 +28,10 @@ export class RoomPasswordComponent implements OnInit {
   ngOnInit() {
     this.roomId = this.config.data.roomId;
     this.webcamId = this.config.data.webcamId;
+    console.log(this.config.data);
+    this.defaultMuteVideo = this.config.data.defaultMuteVideo;
+    this.defaultMuteChat = this.config.data.defaultMuteChat;
+    console.log({ password: this.password, webcamId: this.webcamId, enableChat: this.defaultMuteChat, enableVideo: this.defaultMuteVideo });
   }
 
   checkPassword() {
@@ -36,7 +42,7 @@ export class RoomPasswordComponent implements OnInit {
           this.dynamicRef.close();
           this.router.navigate([
             '/room/' + this.roomId],
-            { queryParams: { password: this.password, webcamId: this.webcamId } },
+            { queryParams: { password: this.password, webcamId: this.webcamId, enableChat: this.defaultMuteChat, enableVideo: this.defaultMuteVideo } },
           );
         },
         error: (err: HttpErrorResponse) => {

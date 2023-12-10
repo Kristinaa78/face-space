@@ -87,11 +87,17 @@ namespace face_space.Persistance.Repositories
         public async Task JoinRoom(int roomId, string username, string connectionId, string password)
         {
             var user = _context.Users.First(x => x.Username.Equals(username));
-            if (!(_context.Rooms.First(x => x.Id == roomId).Password == null ||
-                _context.Rooms.First(x => x.Id == roomId).AdminId == user.Id ||
+            var room = _context.Rooms.First(x => x.Id == roomId);
+
+
+            if (!(room.Password == null ||
+                  room.AdminId == user.Id ||
                   _context.Invites.Any(x => x.RoomId == roomId && x.UserId == user.Id) ||
-                  _context.Rooms.First(x => x.Id == roomId).Password.Equals(password)))
+                  room.Password.Equals(password)))
                 throw new System.Exception("Bad password!");
+            
+            if (room.Count >= room.Participants)
+                throw new System.Exception("Room is full!");
 
             _context.Connections.Add(new Connection
             {

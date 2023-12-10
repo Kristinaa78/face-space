@@ -54,6 +54,7 @@ namespace face_space.Application.Services
                 Participants = room.Participants,
                 EnableChat = room.EnableChat,
                 EnableVideo = room.EnableVideo,
+                Count = room.Count,
                 Invited = room.Invites.Any(x => x.User.Username.Equals(user)),
             }).ToList();
         }
