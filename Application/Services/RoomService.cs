@@ -35,7 +35,7 @@ namespace face_space.Application.Services
                 RoomPassword = newRoom.Password,
                 Participants = newRoom.Participants,
                 EnableChat = newRoom.EnableChat,
-                EnableVideo = newRoom.EnableVideo,
+                EnableVideo = true, // disabling video is not implemented yet
             };
         }
 

@@ -62,7 +62,10 @@
         <div class="row d-flex flex-row mt-2">
           <p-checkbox
             formControlName="enableVideo"
+            appendTo="body"
             [binary]="true"
+            tooltipPosition="top"
+            pTooltip="Muting video stream is not implemeted yet."
             label="Enable video"
             inputId="enableVideo"
           ></p-checkbox>
@@ -108,7 +111,7 @@
       pButton
       pRipple
       label="Create"
-      style="font-weight: 500;"
+      style="font-weight: 500"
       class="p-button-success text-uppercase w-100 mt-4"
       (click)="createRoom()"
     ></button>

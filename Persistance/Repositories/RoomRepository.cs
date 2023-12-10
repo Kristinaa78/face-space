@@ -30,7 +30,7 @@ namespace face_space.Persistance.Repositories
                 Password = room.RoomPassword,
                 Participants = room.Participants,
                 EnableChat = room.EnableChat,
-                EnableVideo = room.EnableVideo,
+                EnableVideo = true,
                 AdminId = user.Id
             });
 
