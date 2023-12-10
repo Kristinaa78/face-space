@@ -43,29 +43,40 @@
                   class="col-5 d-flex justify-content-end align-items-center"
                 >
                   <i
+                    *ngIf="room.invited"
+                    style="margin-right: 10px"
+                    class="fa-solid fa-star"
+                    pTooltip="You have been invited to this room." 
+                  ></i>
+                  <i
                     *ngIf="room.roomPassword"
                     style="margin-right: 10px"
                     class="lock-icon fa-solid fa-lock"
+                    pTooltip="Room access is protected with password."
                   ></i>
 
                   <i
                     *ngIf="room.enableChat"
                     style="margin-right: 10px"
                     class="enabled-icon fa-solid fa-comment"
+                    pTooltip="Chat is enabled."
                   ></i>
                   <i
                     *ngIf="!room.enableChat"
                     style="margin-right: 10px"
                     class="disabled-icon fa-solid fa-comment-slash"
+                    pTooltip="Chat is disabled."
                   ></i>
 
                   <i
                     *ngIf="room.enableVideo"
                     class="enabled-icon fa-solid fa-video"
+                    pTooltip="Room with both video and audio."
                   ></i>
                   <i
                     *ngIf="!room.enableVideo"
                     class="disabled-icon fa-solid fa-video-slash"
+                    pTooltip="Audio-only room."
                   ></i>
                 </div>
               </div>

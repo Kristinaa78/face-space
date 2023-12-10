@@ -19,10 +19,12 @@
               <i
                 *ngIf="room.enableChat"
                 class="enabled-icon fa-solid fa-comment"
+                pTooltip="Chat is enabled."
               ></i>
               <i
                 *ngIf="!room.enableChat"
                 class="disabled-icon fa-solid fa-comment-slash"
+                pTooltip="Chat is disabled."
               ></i>
             </span>
           </div>
@@ -32,10 +34,12 @@
               <i
                 *ngIf="room.enableVideo"
                 class="enabled-icon fa-solid fa-video"
+                pTooltip="Room with both video and audio."
               ></i>
               <i
                 *ngIf="!room.enableVideo"
                 class="disabled-icon fa-solid fa-video-slash"
+                pTooltip="Audio-only room."
               ></i>
             </span>
           </div>
@@ -48,10 +52,12 @@
               <i
                 *ngIf="room.hasPassword"
                 class="enabled-icon fa-solid fa-check"
+                pTooltip="Room access is protected with password."
               ></i>
               <i
                 *ngIf="!room.hasPassword"
                 class="disabled-icon fa-solid fa-xmark"
+                pTooltip="No password needed."
               ></i>
             </span>
           </div>
