@@ -208,6 +208,7 @@ export class RoomComponent implements OnInit, OnDestroy {
         video: {
           deviceId: { exact: this.webcamId },
         },
+        audio: true
       });
     }
     this.localvideoPlayer.nativeElement.srcObject = this.stream;
